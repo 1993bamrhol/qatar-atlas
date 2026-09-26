@@ -1,0 +1,2 @@
+import Link from "next/link";import { Section } from "@/components/ui/section";import { timelinePreview } from "@/data/home";
+export function TimelinePreview(){return <Section eyebrow="QATAR THROUGH TIME" title="A timeline built from evidence"><div className="qa-timeline-grid">{timelinePreview.map(item=><article className="qa-timeline-card" key={item.year}><p className="qa-card-label">{item.kind}</p><strong>{item.year}</strong><h3>{item.title}</h3></article>)}</div><Link className="qa-text-link" href="/timeline">Explore the full timeline →</Link></Section>}

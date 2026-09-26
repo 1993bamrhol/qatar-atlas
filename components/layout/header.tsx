@@ -1,3 +1,3 @@
 import Link from "next/link";import {Container} from "./container";import {NAV_ITEMS} from "@/lib/constants";
-const labels={leadership:"Leadership",projects:"Projects",timeline:"Timeline",connections:"Connections",map:"Map"} as const;
+const labels={leadership:"Leadership",projects:"Projects",timeline:"Timeline",connections:"Connections",map:"Map",sources:"Sources"} as const;
 export function Header(){return <header className="qa-header"><Container className="qa-nav"><Link href="/" className="qa-brand" aria-label="Qatar Atlas home"><span>QATAR ATLAS</span><span lang="ar" dir="rtl">أطلس قطر</span></Link><nav aria-label="Primary navigation">{NAV_ITEMS.map(item=><Link key={item} href={`/${item}`}>{labels[item]}</Link>)}</nav><div className="qa-language" aria-label="Language availability"><span title="Arabic locale is being prepared">AR</span><span>/</span><span aria-current="true">EN</span></div></Container></header>}

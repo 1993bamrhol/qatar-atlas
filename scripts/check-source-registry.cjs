@@ -25,7 +25,9 @@ for(const token of [
   'for(const item of [...rulerPeriods,...historicalMilestones])',
   'for(const item of mapRecords)'
 ])assert(registry.includes(token),"Source registry builder missing canonical coverage contract: "+token);
-assert(registry.includes('if(!args.url||args.url.startsWith("/"))return;'),"Internal methodology links must not be treated as external evidence sources");\nassert(registry.includes("labelAr:string"),"Linked source records must carry an Arabic display label");\nfor(const token of ['connectionEdgeAr','mapRecordAr','rulerAr','milestoneAr'])assert(registry.includes(token),"Arabic source-registry reuse missing: "+token);
+assert(registry.includes('if(!args.url||args.url.startsWith("/"))return;'),"Internal methodology links must not be treated as external evidence sources");
+assert(registry.includes("labelAr:string"),"Linked source records must carry an Arabic display label");
+for(const token of ['connectionEdgeAr','mapRecordAr','rulerAr','milestoneAr'])assert(registry.includes(token),"Arabic source-registry reuse missing: "+token);
 
 const page=read("app/[locale]/sources/page.tsx");
 for(const token of ["SourceRegistryExplorer","sourceRegistryStats","Record review date is not source publication date","تاريخ مراجعة السجل ليس تاريخ نشر المصدر"])

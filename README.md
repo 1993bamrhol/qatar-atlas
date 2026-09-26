@@ -44,3 +44,6 @@ Release gate:
 `npm run check:perf`
 
 Do not publish precise map pins unless the record is `PIN_VERIFIED`. Do not replace official-image placeholders until usage rights have been reviewed.
+
+
+Preview deployment branch: `develop`. Production remains gated on `main` until final launch approval.

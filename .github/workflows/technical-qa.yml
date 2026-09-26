@@ -30,6 +30,8 @@ jobs:
         run: npm run check:content
       - name: Evidence integrity audit
         run: npm run check:evidence
+      - name: Source registry audit
+        run: npm run check:sources
       - name: Arabic completeness audit
         run: npm run check:ar
       - name: Accessibility and responsive audit

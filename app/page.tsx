@@ -1,2 +1,2 @@
-import { Header } from "@/components/layout/header";import { Hero } from "@/components/home/hero";import { TimelinePreview } from "@/components/home/timeline-preview";import { LeadershipPreview } from "@/components/home/leadership-preview";import { ProjectsPreview } from "@/components/home/projects-preview";import { ConnectionsPreview } from "@/components/home/connections-preview";import { MapPreview } from "@/components/home/map-preview";import { NumbersPreview } from "@/components/home/numbers-preview";import { MethodologyPreview } from "@/components/home/methodology-preview";
-export default function Home(){return <><Header/><main><Hero/><TimelinePreview/><LeadershipPreview/><ProjectsPreview/><ConnectionsPreview/><MapPreview/><NumbersPreview/></main><MethodologyPreview/></>}
+import {permanentRedirect} from "next/navigation";
+export default function LegacyRedirect(){permanentRedirect("/en")}

@@ -15,7 +15,8 @@
     "check:visual": "node scripts/check-visual-responsive.cjs",
     "check:seo": "node scripts/check-seo-ssr.cjs",
     "check:security": "node scripts/check-production-security.cjs",
-    "check:perf": "node scripts/check-performance-budget.cjs"
+    "check:perf": "node scripts/check-performance-budget.cjs",
+    "check:data-safety": "node scripts/check-production-data-safety.cjs"
   },
   "dependencies": {
     "next": "^15.5.0",

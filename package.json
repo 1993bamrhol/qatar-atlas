@@ -8,7 +8,8 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "check:routes": "node scripts/check-route-integrity.cjs",
-    "check:content": "node scripts/check-project-content.cjs"
+    "check:content": "node scripts/check-project-content.cjs",
+    "check:evidence": "node scripts/check-evidence-integrity.cjs"
   },
   "dependencies": {
     "next": "^15.5.0",

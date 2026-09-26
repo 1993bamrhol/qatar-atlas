@@ -4,6 +4,7 @@ const errors=[];
 const assert=(ok,msg)=>{if(!ok)errors.push(msg)};
 const map=read("data/map.ts");
 const projects=read("data/projects.ts");
+const projectsAr=read("data/projects-ar.ts");
 const leadership=read("data/leadership.ts");
 const connections=read("data/connections.ts");
 const sitemap=read("app/sitemap.ts");
@@ -20,6 +21,7 @@ assert(projects.includes("Visit Qatar · Doha Metro Guide"),"Doha Metro supporti
 assert(projects.includes("Qatar Free Zones Authority · The Authority"),"QFZ creation supporting source is missing");
 assert(projects.includes("National Artificial Intelligence Strategy for Qatar 2019"),"National AI strategy supporting source is missing");
 assert(projects.includes("MCIT · Fanar at Qatar Economic Forum 2024"),"Fanar supporting source is missing");
+for(const label of ["Visit Qatar · Doha Metro Guide","Qatar Free Zones Authority · The Authority","MCIT · National Artificial Intelligence Strategy for Qatar 2019","MCIT · Fanar at Qatar Economic Forum 2024"]){assert(projectsAr.includes('"'+label+'":{label:'),"Arabic supporting source translation missing: "+label);}
 assert(sitemap.includes("NEXT_PUBLIC_SITE_URL"),"Sitemap must support explicit production domain");
 assert(sitemap.includes("VERCEL_PROJECT_PRODUCTION_URL"),"Sitemap must support Vercel production domain");
 assert(sitemap.includes("if(!base)return []"),"Sitemap must not invent a production domain");

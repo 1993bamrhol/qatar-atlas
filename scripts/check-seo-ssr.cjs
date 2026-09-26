@@ -13,10 +13,10 @@ const shell=read("components/layout/locale-shell.tsx");
 assert(!shell.includes("document.documentElement"),"Client shell must not mutate root html language/direction");
 const localeLayout=read("app/[locale]/layout.tsx");
 for(const token of ["generateMetadata","openGraph","ar_QA","en_QA","robots"])assert(localeLayout.includes(token),"Localized layout metadata missing: "+token);
-const seoPages=["app/[locale]/leadership/page.tsx","app/[locale]/projects/page.tsx","app/[locale]/timeline/page.tsx","app/[locale]/connections/page.tsx","app/[locale]/map/page.tsx","app/[locale]/methodology/page.tsx","app/[locale]/leadership/[slug]/page.tsx","app/[locale]/projects/[slug]/page.tsx"];
+const seoPages=["app/[locale]/leadership/page.tsx","app/[locale]/projects/page.tsx","app/[locale]/timeline/page.tsx","app/[locale]/connections/page.tsx","app/[locale]/map/page.tsx","app/[locale]/methodology/page.tsx","app/[locale]/sources/page.tsx","app/[locale]/leadership/[slug]/page.tsx","app/[locale]/projects/[slug]/page.tsx"];
 seoPages.forEach(p=>assert(read(p).includes("generateMetadata"),p+" missing page metadata"));
 assert(fs.existsSync("app/robots.ts"),"robots.ts missing");
-const legacy=["app/page.tsx","app/leadership/page.tsx","app/projects/page.tsx","app/timeline/page.tsx","app/connections/page.tsx","app/map/page.tsx","app/leadership/[slug]/page.tsx","app/projects/[slug]/page.tsx"];
+const legacy=["app/page.tsx","app/leadership/page.tsx","app/projects/page.tsx","app/timeline/page.tsx","app/connections/page.tsx","app/map/page.tsx","app/sources/page.tsx","app/leadership/[slug]/page.tsx","app/projects/[slug]/page.tsx"];
 legacy.forEach(p=>assert(read(p).includes("permanentRedirect"),p+" must permanently redirect to localized route"));
 if(errors.length){console.error("SEO/SSR audit failed:\n"+errors.join("\n"));process.exit(1)}
 console.log("SEO/SSR audit passed: server lang/dir, localized metadata, robots and legacy redirects enforced.");

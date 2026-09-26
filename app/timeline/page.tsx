@@ -1,2 +1,2 @@
-import {Header} from "@/components/layout/header";import {Container} from "@/components/layout/container";import {TimelineExplorer} from "@/components/timeline/timeline-explorer";
-export default function TimelinePage(){return <><Header/><main><section className="qa-timeline-hero"><Container><p className="qa-eyebrow">TIMELINE EXPLORER</p><h1>1851 → Present</h1><p>Explore leadership periods and selected documented milestones without turning temporal overlap into personal attribution.</p></Container></section><TimelineExplorer/></main></>}
+import {permanentRedirect} from "next/navigation";
+export default function LegacyRedirect(){permanentRedirect("/en/timeline")}

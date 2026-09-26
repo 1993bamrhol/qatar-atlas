@@ -27,6 +27,8 @@ export type SourceRegistryEntry={
   sensitivities:EvidenceSensitivity[];
 };
 
+const labelEnByUrl:Record<string,string>={"https://www.lusail.com/the-city-of-a-lifetime/":"Lusail · The City of a Lifetime"};
+
 const labelArByUrl:Record<string,string>={
 "https://diwan.gov.qa/hh-the-amir/biography?sc_lang=en":"الديوان الأميري · السيرة الرسمية للأمير",
 "https://www.diwan.gov.qa/en/hh-deputy-amir/biography":"الديوان الأميري · السيرة الرسمية لنائب الأمير",
@@ -104,7 +106,7 @@ for(const person of leaders){
   add({url:person.sourceUrl,label:person.sourceLabel,labelAr:ar?.sourceLabel,role:"PRIMARY_RECORD",record:{kind:"Leadership",id:person.slug,label:person.name,labelAr:ar?.name??person.name,href:"/leadership/"+person.slug},sourceKind:person.evidence.sourceKind,reviewedOn:person.evidence.verifiedOn,sensitivity:person.evidence.sensitivity});
 }
 for(const edge of graphEdges){
-  add({url:edge.sourceUrl,label:labelArByUrl[edge.sourceUrl]?undefined:fallbackLabel(edge.sourceUrl),labelAr:labelArByUrl[edge.sourceUrl],role:"RELATIONSHIP_EVIDENCE",record:{kind:"Connection",id:edge.id,label:edge.label,labelAr:connectionEdgeAr[edge.id]?.label??edge.label,href:"/connections"},sourceKind:edge.evidenceMeta.sourceKind,reviewedOn:edge.evidenceMeta.verifiedOn,sensitivity:edge.evidenceMeta.sensitivity});
+  add({url:edge.sourceUrl,label:labelEnByUrl[edge.sourceUrl]??(labelArByUrl[edge.sourceUrl]?undefined:fallbackLabel(edge.sourceUrl)),labelAr:labelArByUrl[edge.sourceUrl],role:"RELATIONSHIP_EVIDENCE",record:{kind:"Connection",id:edge.id,label:edge.label,labelAr:connectionEdgeAr[edge.id]?.label??edge.label,href:"/connections"},sourceKind:edge.evidenceMeta.sourceKind,reviewedOn:edge.evidenceMeta.verifiedOn,sensitivity:edge.evidenceMeta.sensitivity});
 }
 for(const item of [...rulerPeriods,...historicalMilestones]){
   add({url:item.sourceUrl,label:item.sourceLabel,labelAr:labelArByUrl[item.sourceUrl],role:"TIMELINE_EVIDENCE",record:{kind:"Timeline",id:item.year+"-"+item.title,label:item.title,labelAr:(rulerAr[item.year]?.[0]??milestoneAr[item.year]?.[0]??item.title),href:"/timeline"}});

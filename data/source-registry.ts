@@ -96,7 +96,7 @@ for(const project of projects){
   add({url:project.sourceUrl,label:project.sourceLabel,labelAr:ar?.sourceLabel,role:"PRIMARY_RECORD",record:{kind:"Project",id:project.slug,label:project.name,labelAr:ar?.name??project.name,href:"/projects/"+project.slug},sourceKind:project.evidence.sourceKind,reviewedOn:project.evidence.verifiedOn,sensitivity:project.evidence.sensitivity});
   for(const source of project.supportingSources??[]){
     const arSource=ar?.supportingSources?.[source.label];
-    add({url:source.url,label:source.label,labelAr:arSource?.label,role:"SUPPORTING_RECORD",record:{kind:"Project",id:project.slug,label:project.name,href:"/projects/"+project.slug},reviewedOn:project.evidence.verifiedOn,sensitivity:project.evidence.sensitivity});
+    add({url:source.url,label:source.label,labelAr:arSource?.label,role:"SUPPORTING_RECORD",record:{kind:"Project",id:project.slug,label:project.name,labelAr:ar?.name??project.name,href:"/projects/"+project.slug},reviewedOn:project.evidence.verifiedOn,sensitivity:project.evidence.sensitivity});
   }
 }
 for(const person of leaders){

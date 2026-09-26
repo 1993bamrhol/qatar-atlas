@@ -3,13 +3,16 @@ import {projectsAr} from "@/data/projects-ar";
 import {leaders} from "@/data/leadership";
 import {leadershipAr} from "@/data/leadership-ar";
 import {graphEdges} from "@/data/connections";
+import {connectionEdgeAr} from "@/data/connections-ar";
 import {mapRecords} from "@/data/map";
+import {mapRecordAr} from "@/data/map-ar";
 import {rulerPeriods,historicalMilestones} from "@/data/timeline";
+import {rulerAr,milestoneAr} from "@/data/timeline-ar";
 import type {EvidenceSensitivity,EvidenceMeta} from "@/types";
 
 export type SourceRole="PRIMARY_RECORD"|"SUPPORTING_RECORD"|"RELATIONSHIP_EVIDENCE"|"TIMELINE_EVIDENCE"|"GEOGRAPHIC_EVIDENCE";
 export type SourceRecordKind="Project"|"Leadership"|"Connection"|"Timeline"|"Map";
-export type SourceRecordRef={kind:SourceRecordKind;id:string;label:string;href?:string};
+export type SourceRecordRef={kind:SourceRecordKind;id:string;label:string;labelAr:string;href?:string};
 export type SourceRegistryEntry={
   id:string;
   label:string;
@@ -90,7 +93,7 @@ function add(args:{url:string;label?:string;labelAr?:string;role:SourceRole;reco
 
 for(const project of projects){
   const ar=projectsAr[project.slug];
-  add({url:project.sourceUrl,label:project.sourceLabel,labelAr:ar?.sourceLabel,role:"PRIMARY_RECORD",record:{kind:"Project",id:project.slug,label:project.name,href:"/projects/"+project.slug},sourceKind:project.evidence.sourceKind,reviewedOn:project.evidence.verifiedOn,sensitivity:project.evidence.sensitivity});
+  add({url:project.sourceUrl,label:project.sourceLabel,labelAr:ar?.sourceLabel,role:"PRIMARY_RECORD",record:{kind:"Project",id:project.slug,label:project.name,labelAr:ar?.name??project.name,href:"/projects/"+project.slug},sourceKind:project.evidence.sourceKind,reviewedOn:project.evidence.verifiedOn,sensitivity:project.evidence.sensitivity});
   for(const source of project.supportingSources??[]){
     const arSource=ar?.supportingSources?.[source.label];
     add({url:source.url,label:source.label,labelAr:arSource?.label,role:"SUPPORTING_RECORD",record:{kind:"Project",id:project.slug,label:project.name,href:"/projects/"+project.slug},reviewedOn:project.evidence.verifiedOn,sensitivity:project.evidence.sensitivity});
@@ -98,16 +101,16 @@ for(const project of projects){
 }
 for(const person of leaders){
   const ar=leadershipAr[person.slug];
-  add({url:person.sourceUrl,label:person.sourceLabel,labelAr:ar?.sourceLabel,role:"PRIMARY_RECORD",record:{kind:"Leadership",id:person.slug,label:person.name,href:"/leadership/"+person.slug},sourceKind:person.evidence.sourceKind,reviewedOn:person.evidence.verifiedOn,sensitivity:person.evidence.sensitivity});
+  add({url:person.sourceUrl,label:person.sourceLabel,labelAr:ar?.sourceLabel,role:"PRIMARY_RECORD",record:{kind:"Leadership",id:person.slug,label:person.name,labelAr:ar?.name??person.name,href:"/leadership/"+person.slug},sourceKind:person.evidence.sourceKind,reviewedOn:person.evidence.verifiedOn,sensitivity:person.evidence.sensitivity});
 }
 for(const edge of graphEdges){
-  add({url:edge.sourceUrl,label:labelArByUrl[edge.sourceUrl]?undefined:fallbackLabel(edge.sourceUrl),labelAr:labelArByUrl[edge.sourceUrl],role:"RELATIONSHIP_EVIDENCE",record:{kind:"Connection",id:edge.id,label:edge.label,href:"/connections"},sourceKind:edge.evidenceMeta.sourceKind,reviewedOn:edge.evidenceMeta.verifiedOn,sensitivity:edge.evidenceMeta.sensitivity});
+  add({url:edge.sourceUrl,label:labelArByUrl[edge.sourceUrl]?undefined:fallbackLabel(edge.sourceUrl),labelAr:labelArByUrl[edge.sourceUrl],role:"RELATIONSHIP_EVIDENCE",record:{kind:"Connection",id:edge.id,label:edge.label,labelAr:connectionEdgeAr[edge.id]?.label??edge.label,href:"/connections"},sourceKind:edge.evidenceMeta.sourceKind,reviewedOn:edge.evidenceMeta.verifiedOn,sensitivity:edge.evidenceMeta.sensitivity});
 }
 for(const item of [...rulerPeriods,...historicalMilestones]){
-  add({url:item.sourceUrl,label:item.sourceLabel,labelAr:labelArByUrl[item.sourceUrl],role:"TIMELINE_EVIDENCE",record:{kind:"Timeline",id:item.year+"-"+item.title,label:item.title,href:"/timeline"}});
+  add({url:item.sourceUrl,label:item.sourceLabel,labelAr:labelArByUrl[item.sourceUrl],role:"TIMELINE_EVIDENCE",record:{kind:"Timeline",id:item.year+"-"+item.title,label:item.title,labelAr:(rulerAr[item.year]?.[0]??milestoneAr[item.year]?.[0]??item.title),href:"/timeline"}});
 }
 for(const item of mapRecords){
-  add({url:item.sourceUrl,label:item.sourceLabel,labelAr:labelArByUrl[item.sourceUrl],role:"GEOGRAPHIC_EVIDENCE",record:{kind:"Map",id:item.id,label:item.name,href:"/map"}});
+  add({url:item.sourceUrl,label:item.sourceLabel,labelAr:labelArByUrl[item.sourceUrl],role:"GEOGRAPHIC_EVIDENCE",record:{kind:"Map",id:item.id,label:item.name,labelAr:mapRecordAr[item.id]?.name??item.name,href:"/map"}});
 }
 
 export const sourceRegistry=[...entries.values()].sort((a,b)=>a.publisher.localeCompare(b.publisher)||a.label.localeCompare(b.label));

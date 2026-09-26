@@ -36,5 +36,7 @@ jobs:
         run: npm run check:a11y
       - name: Visual responsive audit
         run: npm run check:visual
+      - name: SEO and SSR audit
+        run: npm run check:seo
       - name: Production build
         run: npm run build

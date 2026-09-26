@@ -14,7 +14,7 @@ export function SourceRegistryExplorer({locale,entries}:{locale:"ar"|"en";entrie
   const [query,setQuery]=useState("");
   const [role,setRole]=useState<(typeof roles)[number]>("All");
   const filtered=useMemo(()=>entries.filter(entry=>{
-    const haystack=[entry.label,entry.labelAr,entry.publisher,entry.publisherAr,...entry.records.map(r=>r.label)].join(" ").toLowerCase();
+    const haystack=[entry.label,entry.labelAr,entry.publisher,entry.publisherAr,...entry.records.flatMap(r=>[r.label,r.labelAr])].join(" ").toLowerCase();
     return (!query||haystack.includes(query.toLowerCase()))&&(role==="All"||entry.roles.includes(role));
   }),[entries,query,role]);
   return <div className="qa-source-registry">

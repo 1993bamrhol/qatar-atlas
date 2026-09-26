@@ -10,7 +10,8 @@
     "check:routes": "node scripts/check-route-integrity.cjs",
     "check:content": "node scripts/check-project-content.cjs",
     "check:evidence": "node scripts/check-evidence-integrity.cjs",
-    "check:ar": "node scripts/check-arabic-completeness.cjs"
+    "check:ar": "node scripts/check-arabic-completeness.cjs",
+    "check:a11y": "node scripts/check-accessibility-responsive.cjs"
   },
   "dependencies": {
     "next": "^15.5.0",

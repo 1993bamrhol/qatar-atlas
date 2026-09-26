@@ -47,3 +47,5 @@ Do not publish precise map pins unless the record is `PIN_VERIFIED`. Do not repl
 
 
 Preview deployment branch: `develop`. Production remains gated on `main` until final launch approval.
+
+Preview deployment refresh: 2026-09-26T20:45:00.000Z

@@ -14,7 +14,7 @@ export function LocaleHeader({locale}:{locale:Locale}){
   const other:Locale=locale==="en"?"ar":"en";
   const rest=pathname.replace(/^\/(en|ar)(?=\/|$)/,"")||"";
   const menuLabel=locale==="ar"?(open?"إغلاق القائمة":"فتح القائمة"):(open?"Close menu":"Open menu");
-  return <header className="qa-header">
+  return <><a className="qa-skip-link" href="#main-content">{locale==="ar"?"تجاوز إلى المحتوى":"Skip to content"}</a><header className="qa-header">
     <Container className="qa-nav">
       <Link href={`/${locale}`} className="qa-brand" aria-label={locale==="ar"?"أطلس قطر · الرئيسية":"Qatar Atlas · Home"}>
         <span>{d.brand}</span><span>{d.brandAlt}</span>
@@ -27,5 +27,5 @@ export function LocaleHeader({locale}:{locale:Locale}){
       </nav>
       <div className="qa-language"><Link href={`/${other}${rest}`} hrefLang={other} aria-label={locale==="ar"?"Switch to English":"التبديل إلى العربية"}>{other==="ar"?"AR":"EN"}</Link></div>
     </Container>
-  </header>;
+  </header></>;
 }

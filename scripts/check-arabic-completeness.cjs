@@ -39,7 +39,7 @@ rulerYears.forEach(x=>assert(hasKey(timelineExplorer,x),"Missing Arabic ruler ti
 assert(milestoneYears.length===7,"Expected 7 historical milestones");
 milestoneYears.forEach(x=>assert(hasKey(timelineExplorer,x),"Missing Arabic milestone entry: "+x));
 const badgeFiles=["app/[locale]/leadership/page.tsx","app/[locale]/projects/page.tsx","app/[locale]/leadership/[slug]/page.tsx","app/[locale]/projects/[slug]/page.tsx","app/[locale]/methodology/page.tsx","components/home/hero.tsx","components/home/leadership-preview.tsx","components/home/projects-preview.tsx","components/home/connections-preview.tsx","components/connections/connections-explorer.tsx"];
-for(const path of badgeFiles){const text=read(path);const badges=[...text.matchAll(/<(VerificationBadge|RelationshipBadge)\\b[^>]*\\/>/g)].map(m=>m[0]);badges.forEach(b=>assert(/\\blocale=/.test(b),path+" has a user-visible badge without locale: "+b));}
+for(const path of badgeFiles){const text=read(path);for(const tag of ["VerificationBadge","RelationshipBadge"]){const chunks=text.split("<"+tag).slice(1);for(const chunk of chunks){const end=chunk.indexOf("/>");if(end<0)continue;const badge=chunk.slice(0,end);assert(badge.includes("locale="),path+" has a user-visible "+tag+" without locale");}}}
 const userVisibleFiles=[...badgeFiles,"app/[locale]/connections/page.tsx","app/[locale]/map/page.tsx","components/home/map-preview.tsx","components/map/map-explorer.tsx"];
 const joined=userVisibleFiles.map(read).join("\\n");
 for(const token of ["حتى تحقق PIN VERIFIED","آخر تحقق:","<h2>STABLE · TIME SENSITIVE · TARGET · HISTORICAL</h2>"]){assert(!joined.includes(token),"Legacy English/verification copy remains: "+token);}

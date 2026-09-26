@@ -40,6 +40,8 @@ jobs:
         run: npm run check:seo
       - name: Production security audit
         run: npm run check:security
+      - name: Production data safety audit
+        run: npm run check:data-safety
       - name: Production build
         run: |
           set -o pipefail

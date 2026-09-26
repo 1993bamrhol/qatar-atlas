@@ -75,3 +75,13 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #D6A6
   .qa-event-line:before{left:auto;inset-inline-start:58px}
   .qa-event-body:before{left:auto;inset-inline-start:-27px}
 }
+
+@media(max-width:800px){
+  .qa-keyfact-grid>div:nth-child(even){border-inline-end:0}
+}
+@media(max-width:600px){
+  .qa-timeline-grid{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .qa-keyfact-grid>div{border-inline-end:0}
+}

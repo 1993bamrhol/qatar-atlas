@@ -12,7 +12,7 @@ const connectionsAr=read("data/connections-ar.ts");
 const map=read("data/map.ts");
 const mapAr=read("data/map-ar.ts");
 const timeline=read("data/timeline.ts");
-const timelineExplorer=read("components/timeline/timeline-explorer.tsx");
+const timelineAr=read("data/timeline-ar.ts");
 const leaderSlugs=[...leadership.matchAll(/slug:"([^"]+)"/g)].map(m=>m[1]);
 const projectSlugs=[...projects.matchAll(/slug:"([^"]+)"/g)].map(m=>m[1]);
 const nodeSection=connections.slice(connections.indexOf("graphNodes"),connections.indexOf("graphEdges"));
@@ -35,9 +35,9 @@ edgeIds.forEach(x=>assert(hasKey(connectionsAr,x),"Missing Arabic connection edg
 assert(mapIds.length===6,"Expected 6 map records");
 mapIds.forEach(x=>assert(hasKey(mapAr,x),"Missing Arabic map record: "+x));
 assert(rulerYears.length===8,"Expected 8 ruler periods");
-rulerYears.forEach(x=>assert(hasKey(timelineExplorer,x),"Missing Arabic ruler timeline entry: "+x));
+rulerYears.forEach(x=>assert(hasKey(timelineAr,x),"Missing Arabic ruler timeline entry: "+x));
 assert(milestoneYears.length===7,"Expected 7 historical milestones");
-milestoneYears.forEach(x=>assert(hasKey(timelineExplorer,x),"Missing Arabic milestone entry: "+x));
+milestoneYears.forEach(x=>assert(hasKey(timelineAr,x),"Missing Arabic milestone entry: "+x));
 const badgeFiles=["app/[locale]/leadership/page.tsx","app/[locale]/projects/page.tsx","app/[locale]/leadership/[slug]/page.tsx","app/[locale]/projects/[slug]/page.tsx","app/[locale]/methodology/page.tsx","components/home/hero.tsx","components/home/leadership-preview.tsx","components/home/projects-preview.tsx","components/home/connections-preview.tsx","components/connections/connections-explorer.tsx"];
 for(const path of badgeFiles){const text=read(path);for(const tag of ["VerificationBadge","RelationshipBadge"]){const chunks=text.split("<"+tag).slice(1);for(const chunk of chunks){const end=chunk.indexOf("/>");if(end<0)continue;const badge=chunk.slice(0,end);assert(badge.includes("locale="),path+" has a user-visible "+tag+" without locale");}}}
 const userVisibleFiles=[...badgeFiles,"app/[locale]/connections/page.tsx","app/[locale]/map/page.tsx","components/home/map-preview.tsx","components/map/map-explorer.tsx"];

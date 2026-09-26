@@ -33,7 +33,7 @@ export default async function SourcesPage({params}:{params:Promise<{locale:strin
             ?"يجمع هذا السجل المصادر العامة التي يستخدمها أطلس قطر عبر ملفات القيادة والمشاريع والعلاقات والخط الزمني والسياق الجغرافي. وهو لا يحول المصدر إلى حقيقة بحد ذاته؛ بل يوضح أين استُخدم وكيف صُنّف الدليل داخل الأطلس."
             :"This registry gathers the public sources used across Qatar Atlas leadership, projects, relationships, timeline and geographic context. A source is not treated as proof by itself; the registry shows where it is used and how its evidence is classified inside the Atlas."}</p>
           <div className="qa-actions">
-            <Link className="qa-button qa-button--primary" href={"/"+locale+"/methodology"}>{ar?"اقرأ المنهجية":"Read methodology"}</Link>
+            <Link className="qa-button qa-button--primary" href={`/${locale}/methodology`}>{ar?"اقرأ المنهجية":"Read methodology"}</Link>
           </div>
         </Container>
       </section>

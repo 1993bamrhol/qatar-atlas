@@ -32,5 +32,7 @@ jobs:
         run: npm run check:evidence
       - name: Arabic completeness audit
         run: npm run check:ar
+      - name: Accessibility and responsive audit
+        run: npm run check:a11y
       - name: Production build
         run: npm run build

@@ -16,3 +16,31 @@ Interactive bilingual, source-backed digital atlas connecting leadership, instit
 - Media rights checked before public use
 
 Phase 2 foundation branch: `develop`.
+
+
+## Production readiness
+
+Qatar Atlas is designed for a static-first deployment (for example Vercel).
+
+Recommended production environment:
+
+`NEXT_PUBLIC_SITE_URL=https://your-production-domain.example`
+
+When deployed on Vercel, the sitemap can also use `VERCEL_PROJECT_PRODUCTION_URL` automatically. If no production URL is available, the sitemap intentionally emits no canonical URLs rather than publishing localhost or a fabricated domain.
+
+Release gate:
+
+`npm run typecheck`
+`npm run check:routes`
+`npm run check:content`
+`npm run check:evidence`
+`npm run check:ar`
+`npm run check:a11y`
+`npm run check:visual`
+`npm run check:seo`
+`npm run check:security`
+`npm run check:data-safety`
+`npm run build`
+`npm run check:perf`
+
+Do not publish precise map pins unless the record is `PIN_VERIFIED`. Do not replace official-image placeholders until usage rights have been reviewed.

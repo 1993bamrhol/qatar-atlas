@@ -12,7 +12,8 @@
     "check:evidence": "node scripts/check-evidence-integrity.cjs",
     "check:ar": "node scripts/check-arabic-completeness.cjs",
     "check:a11y": "node scripts/check-accessibility-responsive.cjs",
-    "check:visual": "node scripts/check-visual-responsive.cjs"
+    "check:visual": "node scripts/check-visual-responsive.cjs",
+    "check:seo": "node scripts/check-seo-ssr.cjs"
   },
   "dependencies": {
     "next": "^15.5.0",

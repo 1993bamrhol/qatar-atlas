@@ -40,7 +40,7 @@ export function SourceRegistryExplorer({locale,entries}:{locale:"ar"|"en";entrie
           <div><dt>{ar?"السجلات المرتبطة":"Linked records"}</dt><dd>{entry.records.length}</dd></div>
         </dl>
         <div className="qa-source-links">
-          {entry.records.map(record=>record.href?<Link key={record.kind+record.id} href={`/${locale}${record.href}`}><small>{ar?kindAr[record.kind]:record.kind}</small><strong>{record.label}</strong></Link>:<span key={record.kind+record.id}><small>{ar?kindAr[record.kind]:record.kind}</small><strong>{record.label}</strong></span>)}
+          {entry.records.map(record=>record.href?<Link key={record.kind+record.id} href={`/${locale}${record.href}`}><small>{ar?kindAr[record.kind]:record.kind}</small><strong>{ar?record.labelAr:record.label}</strong></Link>:<span key={record.kind+record.id}><small>{ar?kindAr[record.kind]:record.kind}</small><strong>{record.label}</strong></span>)}
         </div>
       </article>)}
       {!filtered.length&&<div className="qa-graph-empty">{ar?"لا توجد مصادر تطابق هذا البحث.":"No sources match this search."}</div>}

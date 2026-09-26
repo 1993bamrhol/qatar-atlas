@@ -26,5 +26,7 @@ jobs:
         run: npm run typecheck
       - name: Route integrity
         run: npm run check:routes
+      - name: Project content audit
+        run: npm run check:content
       - name: Production build
         run: npm run build

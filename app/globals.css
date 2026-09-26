@@ -91,3 +91,9 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #D6A6
 .qa-supporting-sources>a:last-child{border-bottom:0}
 .qa-supporting-sources strong,.qa-supporting-sources small{display:block}
 .qa-supporting-sources small{margin-top:5px;color:var(--muted);line-height:1.5}
+
+.qa-not-found{min-height:100vh;display:grid;place-items:center;padding:32px;background:var(--deep-burgundy);color:white;text-align:center}
+.qa-not-found>div{max-width:760px}
+.qa-not-found h1{font-size:clamp(3rem,8vw,6rem);line-height:.95;margin:16px 0 24px}
+.qa-not-found p:not(.qa-eyebrow){color:#E2CED4;line-height:1.8}
+.qa-not-found .qa-actions{justify-content:center}

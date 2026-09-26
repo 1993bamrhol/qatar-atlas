@@ -34,5 +34,7 @@ jobs:
         run: npm run check:ar
       - name: Accessibility and responsive audit
         run: npm run check:a11y
+      - name: Visual responsive audit
+        run: npm run check:visual
       - name: Production build
         run: npm run build

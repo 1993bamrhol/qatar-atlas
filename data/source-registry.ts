@@ -70,7 +70,7 @@ function publisher(url:string){
   return map[host]??[host,host];
 }
 function fallbackLabel(url:string){const [p]=publisher(url);return p+" · Official source"}
-function idFor(url:string){return Buffer.from(url).toString("base64url").slice(0,18)}
+function idFor(url:string){let h=2166136261;for(let i=0;i<url.length;i++){h^=url.charCodeAt(i);h=Math.imul(h,16777619)}return "src-"+(h>>>0).toString(36)}
 
 const entries=new Map<string,SourceRegistryEntry>();
 function add(args:{url:string;label?:string;labelAr?:string;role:SourceRole;record:SourceRecordRef;sourceKind?:EvidenceMeta["sourceKind"];reviewedOn?:string;sensitivity?:EvidenceSensitivity}){

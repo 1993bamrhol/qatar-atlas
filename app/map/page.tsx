@@ -1,2 +1,2 @@
-import {Header} from "@/components/layout/header";import {Container} from "@/components/layout/container";import {MapExplorer} from "@/components/map/map-explorer";
-export default function MapPage(){return <><Header/><main><section className="qa-map-hero"><Container><p className="qa-eyebrow">INTERACTIVE QATAR MAP</p><h1>Place matters. Precision requires evidence.</h1><p>Explore projects and places through a verification-aware geographic layer. Qatar Atlas separates verified area context from exact public coordinates.</p><div className="qa-map-hero-stats"><span><strong>6</strong> MVP places</span><span><strong>0</strong> assumed exact pins</span><span><strong>3</strong> geographic states</span></div></Container></section><MapExplorer/></main></>}
+import {permanentRedirect} from "next/navigation";
+export default function LegacyRedirect(){permanentRedirect("/en/map")}

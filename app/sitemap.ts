@@ -12,7 +12,7 @@ function siteBase(){
 export default function sitemap():MetadataRoute.Sitemap{
   const base=siteBase();
   if(!base)return [];
-  const staticRoutes=["","leadership","projects","timeline","connections","map","methodology"];
+  const staticRoutes=["","leadership","projects","timeline","connections","map","methodology","sources"];
   const entries:MetadataRoute.Sitemap=[];
   for(const locale of ["en","ar"] as const){
     for(const route of staticRoutes){

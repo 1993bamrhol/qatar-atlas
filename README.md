@@ -34,6 +34,7 @@ Release gate:
 `npm run check:routes`
 `npm run check:content`
 `npm run check:evidence`
+`npm run check:sources`
 `npm run check:ar`
 `npm run check:a11y`
 `npm run check:visual`

@@ -1,0 +1,36 @@
+{
+  "name": "qatar-atlas",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "check:routes": "node scripts/check-route-integrity.cjs",
+    "check:content": "node scripts/check-project-content.cjs",
+    "check:evidence": "node scripts/check-evidence-integrity.cjs",
+    "check:ar": "node scripts/check-arabic-completeness.cjs",
+    "check:a11y": "node scripts/check-accessibility-responsive.cjs",
+    "check:visual": "node scripts/check-visual-responsive.cjs",
+    "check:seo": "node scripts/check-seo-ssr.cjs",
+    "check:security": "node scripts/check-production-security.cjs",
+    "check:perf": "node scripts/check-performance-budget.cjs",
+    "check:data-safety": "node scripts/check-production-data-safety.cjs",
+    "check:sources": "node scripts/check-source-registry.cjs",
+    "check:rc": "node scripts/check-release-candidate.cjs"
+  },
+  "dependencies": {
+    "next": "^15.5.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "typescript": "^5",
+    "tailwindcss": "^4",
+    "@tailwindcss/postcss": "^4"
+  }
+}

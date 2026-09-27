@@ -1,0 +1,2 @@
+import type { ReactNode } from "react";import { Container } from "@/components/layout/container";
+export function Section({eyebrow,title,children,dark=false}:{eyebrow?:string;title:string;children:ReactNode;dark?:boolean}){return <section className={dark?"qa-section qa-section--dark":"qa-section"}><Container>{eyebrow&&<p className="qa-eyebrow">{eyebrow}</p>}<h2>{title}</h2>{children}</Container></section>}

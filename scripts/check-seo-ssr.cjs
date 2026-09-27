@@ -1,0 +1,22 @@
+const fs=require("fs");
+const read=p=>fs.readFileSync(p,"utf8");
+const errors=[];
+const assert=(ok,msg)=>{if(!ok)errors.push(msg)};
+const root=read("app/layout.tsx");
+assert(root.includes('import {headers} from "next/headers"'),"Root layout must read request locale on the server");
+assert(root.includes('get("x-qatar-atlas-locale")'),"Root layout missing locale request header");
+assert(root.includes('<html lang={locale} dir={locale==="ar"?"rtl":"ltr"}>'),"Root html lang/dir must be server-rendered from locale");
+const middleware=read("middleware.ts");
+assert(middleware.includes('headers.set("x-qatar-atlas-locale",locale)'),"Middleware must propagate locale header");
+assert(middleware.includes('/^\\/(ar|en)'),"Middleware must infer ar/en from pathname");
+const shell=read("components/layout/locale-shell.tsx");
+assert(!shell.includes("document.documentElement"),"Client shell must not mutate root html language/direction");
+const localeLayout=read("app/[locale]/layout.tsx");
+for(const token of ["generateMetadata","openGraph","ar_QA","en_QA","robots"])assert(localeLayout.includes(token),"Localized layout metadata missing: "+token);
+const seoPages=["app/[locale]/leadership/page.tsx","app/[locale]/projects/page.tsx","app/[locale]/timeline/page.tsx","app/[locale]/connections/page.tsx","app/[locale]/map/page.tsx","app/[locale]/methodology/page.tsx","app/[locale]/sources/page.tsx","app/[locale]/leadership/[slug]/page.tsx","app/[locale]/projects/[slug]/page.tsx"];
+seoPages.forEach(p=>assert(read(p).includes("generateMetadata"),p+" missing page metadata"));
+assert(fs.existsSync("app/robots.ts"),"robots.ts missing");
+const legacy=["app/page.tsx","app/leadership/page.tsx","app/projects/page.tsx","app/timeline/page.tsx","app/connections/page.tsx","app/map/page.tsx","app/sources/page.tsx","app/leadership/[slug]/page.tsx","app/projects/[slug]/page.tsx"];
+legacy.forEach(p=>assert(read(p).includes("permanentRedirect"),p+" must permanently redirect to localized route"));
+if(errors.length){console.error("SEO/SSR audit failed:\n"+errors.join("\n"));process.exit(1)}
+console.log("SEO/SSR audit passed: server lang/dir, localized metadata, robots and legacy redirects enforced.");

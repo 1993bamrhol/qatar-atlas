@@ -14,7 +14,9 @@ export function MapExplorer({locale="en"}:{locale?:"ar"|"en"}){
   const [category,setCategory]=useState<(typeof categories)[number]>("All");
   const [selected,setSelected]=useState("doha");
   const records=useMemo(()=>category==="All"?mapRecords:mapRecords.filter(r=>r.category===category),[category]);
-  const record=mapRecords.find(r=>r.id===selected)??records[0];
+  const visibleRecord=records.find(r=>r.id===selected)??records[0];
+  const record=visibleRecord;
+  const preciseRecords=records.filter(r=>r.geoStatus==="PIN_VERIFIED"&&r.publicPin);
 
   return <><div className="qa-map-toolbar"><div className="qa-container"><div className="qa-filter-row">
     {categories.map(c=><button type="button" key={c} aria-pressed={category===c} className={category===c?"is-active":""} onClick={()=>setCategory(c)}>{ar?categoryFilterAr[c]:c}</button>)}
@@ -24,10 +26,11 @@ export function MapExplorer({locale="en"}:{locale?:"ar"|"en"}){
       <div className="qa-map-canvas">
         <div className="qa-qatar-silhouette" aria-hidden="true"/>
         <div className="qa-map-north">{ar?"ش":"N"}</div>
-        {records.map(r=>{const t=mapRecordAr[r.id];const name=ar?t?.name??r.name:r.name;return <button type="button" key={r.id} onClick={()=>setSelected(r.id)} className={"qa-map-marker"+(selected===r.id?" is-selected":"")} style={{left:r.canvas.x+"%",top:r.canvas.y+"%"}} aria-label={name}><span>{r.publicPin?"•":"◌"}</span><strong>{name}</strong></button>})}
+        {preciseRecords.map(r=>{const t=mapRecordAr[r.id];const name=ar?t?.name??r.name:r.name;return <button type="button" key={r.id} onClick={()=>setSelected(r.id)} className={"qa-map-marker"+(selected===r.id?" is-selected":"")} style={{left:r.canvas.x+"%",top:r.canvas.y+"%"}} aria-label={name}><span>•</span><strong>{name}</strong></button>})}
+        {!preciseRecords.length&&<div className="qa-map-no-pins"><strong>{ar?"لا توجد نقاط دقيقة منشورة حاليًا":"No precise public pins yet"}</strong><span>{ar?"تظهر المواقع كـسياق منطقة موثق إلى أن تصبح الإحداثية PIN_VERIFIED.":"Records remain verified area context until an exact coordinate is PIN_VERIFIED."}</span></div>}
         <div className="qa-map-disclaimer">{ar?"لوحة جغرافية تخطيطية · العلامات تعرض سياق المنطقة الموثق، لا إحداثيات مساحية.":"Schematic geographic canvas · markers show verified area context, not surveyed coordinates."}</div>
       </div>
-      <aside className="qa-map-panel">{record&&(()=>{const t=mapRecordAr[record.id];return <><div className="qa-map-panel-head"><span>{ar?mapCategoryAr[record.category]:record.category}</span><b className={"qa-geo-status qa-geo-status--"+record.geoStatus.toLowerCase()}>{ar?geoStatusAr[record.geoStatus]:statusLabel[record.geoStatus]}</b></div>
+      <aside className="qa-map-panel"><div className="qa-map-record-list"><p className="qa-card-label">{ar?"سياق المنطقة الموثق":"VERIFIED AREA CONTEXT"}</p>{records.map(r=>{const t=mapRecordAr[r.id];const name=ar?t?.name??r.name:r.name;return <button type="button" key={r.id} className={selected===r.id?"is-active":""} onClick={()=>setSelected(r.id)}><span>{name}</span><small>{ar?geoStatusAr[r.geoStatus]:statusLabel[r.geoStatus]}</small></button>})}</div>{record&&(()=>{const t=mapRecordAr[record.id];return <><div className="qa-map-panel-head"><span>{ar?mapCategoryAr[record.category]:record.category}</span><b className={"qa-geo-status qa-geo-status--"+record.geoStatus.toLowerCase()}>{ar?geoStatusAr[record.geoStatus]:statusLabel[record.geoStatus]}</b></div>
         <h2>{ar?t?.name??record.name:record.name}</h2>
         <p className="qa-map-area">{ar?t?.area??record.area:record.area}</p>
         <p>{ar?t?.summary??record.summary:record.summary}</p>

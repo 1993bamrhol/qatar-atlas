@@ -5,9 +5,11 @@ import {graphEdges,graphNodes,nodeById,type GraphNodeKind} from "@/data/connecti
 import {connectionEdgeAr,connectionNodeAr,graphKindAr} from "@/data/connections-ar";
 import {relationshipLabel,sensitivityLabel,sourceKindLabel} from "@/lib/evidence-i18n";
 import {RelationshipBadge,VerificationBadge} from "@/components/ui/badge";
+import type {RelationshipType} from "@/types";
 
 const kinds:["All",...GraphNodeKind[]]=["All","Leadership","Institution","Strategy","Project","Place"];
-const relationships=["All","DIRECT","INSTITUTIONAL","TEMPORAL"] as const;
+const approvedRelationships=graphEdges.reduce<RelationshipType[]>((items,edge)=>items.includes(edge.relationship)?items:[...items,edge.relationship],[]);
+const relationships:["All",...RelationshipType[]]=["All",...approvedRelationships];
 const kindFilterAr:Record<string,string>={All:"الكل",Leadership:"القيادة",Institution:"المؤسسات",Strategy:"الاستراتيجيات",Project:"المشاريع",Place:"الأماكن"};
 
 export function ConnectionsExplorer({locale="en"}:{locale?:"ar"|"en"}){
@@ -33,7 +35,7 @@ export function ConnectionsExplorer({locale="en"}:{locale?:"ar"|"en"}){
   <section className="qa-section"><div className="qa-container">
     <div className="qa-graph-stats"><strong>{graphNodes.length}</strong><span>{ar?"عقد موثقة":"verified nodes"}</span><strong>{graphEdges.length}</strong><span>{ar?"علاقات مدعومة بالأدلة":"evidence-backed relationships"}</span></div>
     <div className="qa-graph-layout">
-      <div className="qa-graph-canvas" aria-label={ar?"نموذج روابط قطر":"Qatar Connections prototype"}>{nodes.length?nodes.map(n=><button type="button" onClick={()=>setSelected(n.id)} className={"qa-graph-node qa-graph-node--"+n.kind.toLowerCase()+(selected===n.id?" is-selected":"")} key={n.id}><small>{ar?graphKindAr[n.kind]:n.kind}</small><strong>{ar?connectionNodeAr[n.id]??n.label:n.label}</strong></button>):<div className="qa-graph-empty">{ar?"لا توجد عقد موثقة تطابق هذه المرشحات.":"No verified nodes match these filters."}</div>}</div>
+      <div className="qa-graph-canvas" aria-label={ar?"مستكشف روابط قطر":"Qatar Connections explorer"}>{nodes.length?nodes.map(n=><button type="button" onClick={()=>setSelected(n.id)} className={"qa-graph-node qa-graph-node--"+n.kind.toLowerCase()+(selected===n.id?" is-selected":"")} key={n.id}><small>{ar?graphKindAr[n.kind]:n.kind}</small><strong>{ar?connectionNodeAr[n.id]??n.label:n.label}</strong></button>):<div className="qa-graph-empty">{ar?"لا توجد عقد موثقة تطابق هذه المرشحات.":"No verified nodes match these filters."}</div>}</div>
       <aside className="qa-graph-panel">{node?<><div className="qa-graph-panel-head"><span>{ar?graphKindAr[node.kind]:node.kind}</span><VerificationBadge status={node.verification} locale={locale}/></div>
         <h2>{ar?connectionNodeAr[node.id]??node.label:node.label}</h2>
         {node.href&&<Link className="qa-text-link" href={`/${locale}${node.href}`}>{ar?"افتح سجل الأطلس ←":"Open Atlas record →"}</Link>}

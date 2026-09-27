@@ -64,7 +64,7 @@ for(const slug of projectSlugs){
   assertNestedParity(enChunk,arChunk,"project",slug);
 }
 for(const slug of leaderSlugs){
-  const enChunk=recordChunk(leadership,'{slug:"'+slug+'"','},{slug:"');
+  const enChunk=recordChunk(leadership,'{slug:"'+slug+'"','\n{slug:"');
   const arChunk=recordChunk(leadershipAr,'"'+slug+'":{','\n"');
   assertNestedParity(enChunk,arChunk,"leadership",slug);
 }

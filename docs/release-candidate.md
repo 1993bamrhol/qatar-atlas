@@ -1,6 +1,6 @@
 # Qatar Atlas — Release Candidate Gate
 
-Release candidate status: **BLOCKED — MANUAL DEVICE QA PENDING**
+Release candidate status: **DEVICE QA PASSED — FINAL PRE-MERGE CHECK PENDING**
 
 This document separates automated release evidence from the final human visual/device check. Passing CI or receiving a READY Vercel deployment does not, by itself, approve a production merge.
 
@@ -29,10 +29,10 @@ The same release candidate must be checked on these four presentation modes.
 
 | Mode | Target viewport | Status |
 | --- | --- | --- |
-| Desktop · English | 1440 × 900 or wider | PENDING |
-| Desktop · Arabic | 1440 × 900 or wider | PENDING |
-| Mobile · English | ~390 × 844 | PENDING |
-| Mobile · Arabic | ~390 × 844 | PENDING |
+| Desktop · English | 1440 × 900 | PASS — 2026-09-27 |
+| Desktop · Arabic | 1440 × 900 | PASS — 2026-09-27 |
+| Mobile · English | 390 × 844 | PASS — 2026-09-27 |
+| Mobile · Arabic | 390 × 844 | PASS — 2026-09-27 |
 
 ## Critical route set
 
@@ -79,6 +79,17 @@ For each of the four modes, record:
 3. Screenshots for Home, one dense explorer (Connections or Map), and Sources.
 4. Any defect found and the commit that fixes it.
 5. Final PASS date.
+
+
+## Device QA evidence — 2026-09-27
+
+- Candidate product commit: `8ee2b4683c0f4e3be7423b0b9af52b182c1b4711`.
+- Browser engine: Playwright Chromium 1.55.0, headless Linux.
+- Automated browser result: PASS — 4 presentation modes × 10 critical localized routes = 40 route/device checks.
+- Automated checks included: HTTP success, HTML `lang`/`dir`, horizontal overflow, main landmark, temporary media-rights copy, route-preserving language switch, Source Registry rendering, Connections rendering, mobile menu behavior, and expected 404 behavior.
+- Screenshot artifact: `qatar-atlas-rc-visual-8ee2b4683c0f4e3be7423b0b9af52b182c1b4711` (12 screenshots: Home, Connections and Sources for each mode).
+- Human visual review: PASS — the 12 screenshots were reviewed for hierarchy, clipping, RTL/LTR, card balance, dense explorer layout, Source Registry readability and mobile stacking.
+- No release-blocking visual defect was observed in the reviewed evidence.
 
 ## Production rule
 

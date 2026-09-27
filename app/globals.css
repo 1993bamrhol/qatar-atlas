@@ -146,3 +146,9 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #D6A6
   .qa-source-card-head{display:block}
   .qa-source-open{display:inline-block;margin-top:14px}
 }
+
+.qa-source-health{margin-inline-start:auto;font-weight:800}
+.qa-source-health--accessible{border-color:#a8cdb5!important;background:#edf7f0!important}
+.qa-source-health--redirected{border-color:#d8c98b!important;background:#fbf8e9!important}
+.qa-source-health--review_required{border-color:#d8a8b4!important;background:#fbf0f3!important}
+.qa-source-health-note{margin:14px 0 0;padding:10px 12px;border-inline-start:3px solid var(--burgundy);background:var(--warm-white);font-size:.86rem;color:var(--muted)}

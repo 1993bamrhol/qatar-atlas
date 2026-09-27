@@ -34,8 +34,8 @@ const labelArByUrl:Record<string,string>={
 "https://www.diwan.gov.qa/en/hh-deputy-amir/biography":"الديوان الأميري · السيرة الرسمية لنائب الأمير",
 "https://www.diwan.gov.qa/en/about-qatar/qatars-rulers":"الديوان الأميري · حكام قطر",
 "https://diwan.gov.qa/en/About-Qatar/History-of-Qatar":"الديوان الأميري · تاريخ قطر",
-"https://www.diwan.gov.qa/en/about-qatar/qatars-rulers/sheikh-jassim-bin-mohammed-bin-thani":"الديوان الأميري · سيرة الشيخ جاسم بن محمد بن ثاني",
-"https://www.diwan.gov.qa/en/about-qatar/qatars-rulers/sheikh-abdullah-bin-jassim-al-thani":"الديوان الأميري · سيرة الشيخ عبدالله بن جاسم آل ثاني",
+"https://diwan.gov.qa/en/About-Qatar/Qatars-Rulers/Sheikh-Jassim-Bin-Mohammed-Bin-Thani":"الديوان الأميري · سيرة الشيخ جاسم بن محمد بن ثاني",
+"https://diwan.gov.qa/about-qatar/qatars-rulers/sheikh-abdullah-bin-jassim-al-thani?sc_lang=en":"الديوان الأميري · سيرة الشيخ عبدالله بن جاسم آل ثاني",
 "https://www.diwan.gov.qa/en/about-qatar/qatars-rulers/sheikh-ali-bin-abdullah-al-thani":"الديوان الأميري · سيرة الشيخ علي بن عبدالله آل ثاني",
 "https://www.gco.gov.qa/en/state-of-qatar/qatar-national-vision-2030/our-story/":"مكتب الاتصال الحكومي · رؤية قطر الوطنية 2030",
 "https://www.gco.gov.qa/en/state-of-qatar/qatar-national-vision-2030/programs-projects/":"مكتب الاتصال الحكومي · برامج ومشاريع رؤية قطر الوطنية 2030",
@@ -53,7 +53,7 @@ const labelArByUrl:Record<string,string>={
 "https://www.mcit.gov.qa/en/nda":"وزارة الاتصالات وتكنولوجيا المعلومات · الأجندة الرقمية 2030",
 "https://www.mcit.gov.qa/en/artificial-intelligence-committee/":"وزارة الاتصالات وتكنولوجيا المعلومات · لجنة الذكاء الاصطناعي",
 "https://www.mcit.gov.qa/-/media/mcit/documents/strategies/national_artificial_intelligence_strategy_for_qatar_2019_en.pdf":"وزارة الاتصالات وتكنولوجيا المعلومات · الاستراتيجية الوطنية للذكاء الاصطناعي 2019",
-"https://www.mcit.gov.qa/en/news/he-the-minister-we-envision-fanar-as-high-accuracy-arabic-llm-capable-of-processing-and-understanding-natural-arabic/":"وزارة الاتصالات وتكنولوجيا المعلومات · فنار في منتدى قطر الاقتصادي 2024",
+"https://www.mcit.gov.qa/en/news/he-the-minister-we-envision-fanar-as-high-accuracy-arabic-llm-capable-of-processing-and-understanding-natural-arabic":"وزارة الاتصالات وتكنولوجيا المعلومات · فنار في منتدى قطر الاقتصادي 2024",
 "https://visitqatar.com/intl-en/plan-your-trip/getting-around/doha-metro":"زوروا قطر · دليل مترو الدوحة"
 };
 

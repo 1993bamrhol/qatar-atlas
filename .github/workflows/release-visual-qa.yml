@@ -17,13 +17,13 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: package-lock.json
       - name: Install app dependencies
-        run: npm install
-      - name: Install Playwright
-        run: |
-          npm install --no-save playwright@1.55.0
-          npx playwright install --with-deps chromium
+        run: npm ci
+      - name: Install Playwright browser
+        run: ./node_modules/.bin/playwright install --with-deps chromium
       - name: Build app
         run: npm run build
       - name: Start app

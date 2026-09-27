@@ -173,3 +173,66 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #D6A6
 .qa-map-record-list{display:grid;gap:7px;margin-bottom:24px;padding-bottom:22px;border-bottom:1px solid var(--line)}.qa-map-record-list .qa-card-label{margin:0 0 4px}.qa-map-record-list button{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;min-height:44px;padding:9px 11px;border:1px solid transparent;border-radius:10px;background:transparent;text-align:start;cursor:pointer}.qa-map-record-list button:hover{background:var(--warm-white)}.qa-map-record-list button.is-active{border-color:#D9C3CA;background:#F7EFF2}.qa-map-record-list button span{font-weight:750}.qa-map-record-list button small{color:var(--muted);font-size:.65rem;letter-spacing:.04em;text-align:end}
 .qa-locale--ar :is(.qa-hero h1,.qa-page-hero h1,.qa-profile-grid h1,.qa-project-hero h1,.qa-timeline-hero h1,.qa-connections-hero h1,.qa-map-hero h1,.qa-section h2){letter-spacing:0;line-height:1.15}.qa-locale--ar .qa-hero h1{font-size:clamp(3.25rem,7vw,6.5rem)}.qa-locale--ar :is(.qa-eyebrow,.qa-card-label,.qa-event-body span,.qa-connection-kind,.qa-map-panel-head>span,.qa-graph-panel-head>span,.qa-source-meta dt){text-transform:none;letter-spacing:0}.qa-locale--ar p{line-height:1.75}
 @media(max-width:600px){.qa-map-no-pins{width:calc(100% - 44px);padding:16px}.qa-map-record-list button{align-items:flex-start}.qa-locale--ar .qa-page-hero h1,.qa-locale--ar .qa-project-hero h1,.qa-locale--ar .qa-timeline-hero h1,.qa-locale--ar .qa-connections-hero h1,.qa-locale--ar .qa-map-hero h1{font-size:clamp(2.6rem,12vw,4.25rem)}}
+
+
+/* Production polish — evidence hierarchy, dense-page rhythm and institutional surfaces */
+.qa-person-card,.qa-project-card,.qa-project-index>article,.qa-source-card,.qa-graph-panel,.qa-map-panel{
+  box-shadow:0 10px 30px rgba(55,34,40,.045);
+}
+.qa-person-card,.qa-project-card,.qa-project-index>article,.qa-source-card{
+  transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease;
+}
+@media(hover:hover){
+  .qa-person-card:hover,.qa-project-card:hover,.qa-project-index>article:hover,.qa-source-card:hover{
+    border-color:#D4C2C7;
+    box-shadow:0 16px 36px rgba(55,34,40,.075);
+    transform:translateY(-1px);
+  }
+}
+.qa-source-card{border-radius:18px;overflow:hidden}
+.qa-source-card-head h2{line-height:1.25}
+.qa-source-role-row{margin:14px 0 16px}
+.qa-source-meta{
+  border:1px solid var(--line);
+  border-radius:12px;
+  overflow:hidden;
+  background:var(--warm-white);
+  margin-top:16px;
+}
+.qa-source-meta>div{min-width:0}
+.qa-source-meta dt{font-weight:800;color:#695E61}
+.qa-source-meta dd{overflow-wrap:anywhere}
+.qa-source-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
+.qa-source-links a,.qa-source-links span{min-width:0}
+.qa-evidence-grid>aside,.qa-project-overview>aside{
+  padding:24px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:white;
+  box-shadow:0 10px 30px rgba(55,34,40,.04);
+}
+.qa-identity-panel,.qa-profile-identity{
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
+}
+.qa-profile-identity strong{font-size:clamp(6.5rem,10vw,9.5rem)}
+.qa-person-body{display:flex;flex-direction:column;align-items:flex-start}
+.qa-person-body .qa-badge{margin-bottom:2px}
+.qa-person-body h2,.qa-person-body h3{line-height:1.2}
+.qa-locale--ar .qa-person-body h2,.qa-locale--ar .qa-person-body h3{line-height:1.45}
+
+@media(max-width:600px){
+  .qa-source-card{padding:18px}
+  .qa-source-meta{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .qa-source-meta>div{padding:11px;border-inline-end:0;border-bottom:1px solid var(--line)}
+  .qa-source-meta>div:nth-child(odd){border-inline-end:1px solid var(--line)}
+  .qa-source-meta>div:nth-last-child(-n+2){border-bottom:0}
+  .qa-source-meta dt{font-size:.68rem}
+  .qa-source-meta dd{font-size:.82rem}
+  .qa-source-links{grid-template-columns:1fr}
+  .qa-evidence-grid>aside,.qa-project-overview>aside{padding:20px}
+}
+@media(max-width:360px){
+  .qa-source-meta{grid-template-columns:1fr}
+  .qa-source-meta>div:nth-child(odd){border-inline-end:0}
+  .qa-source-meta>div:nth-last-child(2){border-bottom:1px solid var(--line)}
+}

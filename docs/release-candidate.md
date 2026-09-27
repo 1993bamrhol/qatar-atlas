@@ -1,6 +1,8 @@
 # Qatar Atlas — Release Candidate Gate
 
-Release candidate status: **DEVICE QA PASSED — FINAL PRE-MERGE CHECK PENDING**
+Release candidate status: **FINAL PRE-MERGE GATE PASSED — FROZEN PRODUCT BASELINE**
+
+Frozen release baseline: `2bf4fb909ffd1059453bea5540f744b46eee7237`
 
 This document separates automated release evidence from the final human visual/device check. Passing CI or receiving a READY Vercel deployment does not, by itself, approve a production merge.
 
@@ -20,7 +22,7 @@ This document separates automated release evidence from the final human visual/d
 - [x] Production build
 - [x] Performance budget
 - [x] Latest Preview deployment READY
-- [x] No grouped Vercel runtime errors in the latest 24-hour review window
+- [x] No `error` / `fatal` runtime logs in the latest preview review window
 - [x] Media/portrait policy documented; neutral identity panels used until display rights are confirmed
 
 ## Manual device matrix
@@ -80,23 +82,26 @@ For each of the four modes, record:
 4. Any defect found and the commit that fixes it.
 5. Final PASS date.
 
-
 ## Device QA evidence — 2026-09-27
 
-- Candidate product commit: `8ee2b4683c0f4e3be7423b0b9af52b182c1b4711`.
+- Candidate product commit / frozen release baseline: `2bf4fb909ffd1059453bea5540f744b46eee7237`.
 - Browser engine: Playwright Chromium 1.55.0, headless Linux.
+- Technical QA: PASS on `2bf4fb909ffd1059453bea5540f744b46eee7237`.
+- Release Visual QA: PASS on `2bf4fb909ffd1059453bea5540f744b46eee7237`.
 - Automated browser result: PASS — 4 presentation modes × 10 critical localized routes = 40 route/device checks.
 - Automated checks included: HTTP success, HTML `lang`/`dir`, horizontal overflow, main landmark, temporary media-rights copy, route-preserving language switch, Source Registry rendering, Connections rendering, mobile menu behavior, and expected 404 behavior.
-- Screenshot artifact: `qatar-atlas-rc-visual-8ee2b4683c0f4e3be7423b0b9af52b182c1b4711` (12 screenshots: Home, Connections and Sources for each mode).
-- Human visual review: PASS — the 12 screenshots were reviewed for hierarchy, clipping, RTL/LTR, card balance, dense explorer layout, Source Registry readability and mobile stacking.
-- No release-blocking visual defect was observed in the reviewed evidence.
+- Screenshot artifact: `qatar-atlas-rc-visual-2bf4fb909ffd1059453bea5540f744b46eee7237` (Artifact ID `10937250277`; 12 screenshots: Home, Connections and Sources for each mode).
+- Human visual review: PASS — the new 12 screenshots for `2bf4fb909ffd1059453bea5540f744b46eee7237` were reviewed for EN/AR parity, Desktop/Mobile presentation, hierarchy, clipping, RTL/LTR, card balance, Connections evidence layout, Source Registry readability and mobile stacking.
+- Leadership, Timeline and Map presentation was cross-checked through the Home previews plus the four-mode critical-route browser QA on their dedicated routes.
+- Current Vercel preview deployment: `dpl_CvzAa55tJP5875qjYk3EA9c44bRA` — READY from `develop` at `2bf4fb909ffd1059453bea5540f744b46eee7237`.
+- Runtime review: no `error` / `fatal` logs found for the current preview in the reviewed window.
+- Source freshness spot-check: PASS — current official leadership, national-vision, energy and digital-strategy sources were re-checked; no release-blocking freshness conflict was found.
+- No release-blocking visual, runtime, source/evidence or bilingual presentation defect was observed in the re-certification evidence.
 
 ## Production rule
 
-Do **not** mark PR #1 ready and do **not** merge `develop` into `main` while any manual device mode remains `PENDING` or `FAIL`.
+Do **not** merge `develop` into `main` unless the frozen product baseline above remains the approved release candidate and no subsequent product-code change has been introduced.
 
-After all four modes pass:
-1. update every mode above to `PASS — YYYY-MM-DD`;
-2. run `npm run check:rc`;
-3. update PR #1 from Draft to Ready for Review;
-4. merge only after one final source/runtime spot-check.
+The documentation commit that records this certification does not alter the frozen product baseline.
+
+Production merge requires a separate explicit release command followed by production deployment verification and post-merge smoke QA.

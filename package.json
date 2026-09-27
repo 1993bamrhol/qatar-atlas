@@ -17,7 +17,8 @@
     "check:security": "node scripts/check-production-security.cjs",
     "check:perf": "node scripts/check-performance-budget.cjs",
     "check:data-safety": "node scripts/check-production-data-safety.cjs",
-    "check:sources": "node scripts/check-source-registry.cjs"
+    "check:sources": "node scripts/check-source-registry.cjs",
+    "check:rc": "node scripts/check-release-candidate.cjs"
   },
   "dependencies": {
     "next": "^15.5.0",

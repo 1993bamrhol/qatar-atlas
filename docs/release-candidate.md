@@ -100,7 +100,15 @@ For each of the four modes, record:
 
 ## Production rule
 
-Do **not** merge `develop` into `main` unless the frozen product baseline above remains the approved release candidate and no subsequent product-code change has been introduced.
+Do **not** mark PR #1 ready and do **not** merge `develop` into `main` while any manual device mode remains `PENDING` or `FAIL`.
+
+After all four modes pass:
+1. update every mode above to `PASS — YYYY-MM-DD`;
+2. run `npm run check:rc`;
+3. update PR #1 from Draft to Ready for Review;
+4. merge only after one final source/runtime spot-check.
+
+The frozen product baseline for this certification is `2bf4fb909ffd1059453bea5540f744b46eee7237`. Do **not** merge `develop` into `main` if a subsequent product-code change has been introduced without re-certification.
 
 The documentation commit that records this certification does not alter the frozen product baseline.
 

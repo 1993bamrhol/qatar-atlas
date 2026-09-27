@@ -43,7 +43,7 @@ export default async function SourcesPage({params}:{params:Promise<{locale:strin
             <div><strong>{sourceRegistryStats.sources}</strong><span>{ar?"مصدرًا فريدًا":"unique sources"}</span></div>
             <div><strong>{sourceRegistryStats.publishers}</strong><span>{ar?"جهات ناشرة":"publishers"}</span></div>
             <div><strong>{sourceRegistryStats.linkedRecords}</strong><span>{ar?"استخدامًا موثقًا":"documented uses"}</span></div>
-            <div><strong>{sourceRegistryStats.reviewedSources}</strong><span>{ar?"مصادر مرتبطة بسجل مراجعة":"sources tied to review metadata"}</span></div>
+            <div><strong>{sourceRegistryStats.accessAuditedSources}</strong><span>{ar?"مصدرًا خضع لفحص الوصول · "+sourceRegistryStats.reviewRequiredSources+" يتطلب مراجعة":"sources access-audited · "+sourceRegistryStats.reviewRequiredSources+" require review"}</span></div>
           </div>
         </Container>
       </section>
@@ -51,7 +51,7 @@ export default async function SourcesPage({params}:{params:Promise<{locale:strin
         <Container>
           <div className="qa-source-explainer">
             <article><p className="qa-card-label">{ar?"قابلية التتبع":"TRACEABILITY"}</p><h2>{ar?"المصدر مرتبط بالسجل الذي يستخدمه":"Sources are linked to the records that use them"}</h2><p>{ar?"يمكن أن يدعم المصدر مشروعًا أو ملف قيادة أو علاقة أو محطة زمنية أو سياقًا جغرافيًا. تُعرض هذه الاستخدامات بشكل منفصل حتى لا تختلط الأدوار المختلفة للمصدر.":"A source may support a project, leadership profile, relationship, timeline milestone or geographic context. Those uses are shown separately so different evidence roles do not collapse into one."}</p></article>
-            <aside><p className="qa-card-label">{ar?"حدود التوثيق":"DOCUMENTATION BOUNDARY"}</p><h2>{ar?"تاريخ مراجعة السجل ليس تاريخ نشر المصدر":"Record review date is not source publication date"}</h2><p>{ar?"عندما يظهر تاريخ مراجعة، فهو تاريخ مراجعة سجل أطلس قطر المرتبط بالمصدر، وليس ادعاءً عن تاريخ نشر الصفحة الخارجية.":"When a review date appears, it is the Qatar Atlas record-review date associated with that source, not a claim about the external page's publication date."}</p></aside>
+            <aside><p className="qa-card-label">{ar?"حدود التوثيق":"DOCUMENTATION BOUNDARY"}</p><h2>{ar?"تاريخ مراجعة السجل ليس تاريخ نشر المصدر":"Record review date is not source publication date"}</h2><p>{ar?"عندما يظهر تاريخ مراجعة، فهو تاريخ مراجعة سجل أطلس قطر المرتبط بالمصدر، وليس ادعاءً عن تاريخ نشر الصفحة الخارجية.":"When a review date appears, it is the Qatar Atlas record-review date associated with that source, not a claim about the external page's publication date."}</p><p>{ar?"حالة الوصول إلى المصدر هي ملاحظة مسجلة في تاريخ الفحص الظاهر، وليست ضمانًا بأن الموقع الخارجي سيبقى دون تغيير أو متاحًا باستمرار.":"Source access status is an observation made on the stated check date, not a guarantee that an external website will remain unchanged or continuously available."}</p></aside>
           </div>
           <SourceRegistryExplorer locale={locale} entries={sourceRegistry}/>
         </Container>

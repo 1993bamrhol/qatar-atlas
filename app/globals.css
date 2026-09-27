@@ -132,8 +132,8 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #D6A6
   .qa-source-stats>div:nth-child(2){border-inline-end:0}
   .qa-source-stats>div:nth-child(-n+2){border-bottom:1px solid var(--line)}
   .qa-source-meta{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .qa-source-meta>div:nth-child(2){border-inline-end:0}
-  .qa-source-meta>div:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .qa-source-meta>div:nth-child(even){border-inline-end:0}
+  .qa-source-meta>div:nth-child(-n+4){border-bottom:1px solid var(--line)}
 }
 @media(max-width:800px){
   .qa-source-toolbar{top:68px}

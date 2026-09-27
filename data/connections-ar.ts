@@ -28,5 +28,3 @@ e10:{label:"العلاقة برؤية قطر الوطنية 2030",evidence:"تن
 e11:{label:"موقع المشروع",evidence:"يصف الموقع الرسمي للوسيل التطوير بأنه أكبر مدينة مخططة في قطر."}
 };
 export const graphKindAr:Record<string,string>={Leadership:"القيادة",Institution:"مؤسسة",Strategy:"استراتيجية",Project:"مشروع",Place:"مكان"};
-export const relationshipAr:Record<string,string>={DIRECT:"مباشرة",INSTITUTIONAL:"مؤسسية",TEMPORAL:"زمنية"};
-export const evidenceSensitivityAr:Record<string,string>={STABLE:"مستقر",TIME_SENSITIVE:"حساس للوقت",TARGET:"هدف / توقع",HISTORICAL:"تاريخي"};

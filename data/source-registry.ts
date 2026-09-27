@@ -110,8 +110,11 @@ for(const person of leaders){
 for(const edge of graphEdges){
   add({url:edge.sourceUrl,label:labelEnByUrl[edge.sourceUrl]??(labelArByUrl[edge.sourceUrl]?undefined:fallbackLabel(edge.sourceUrl)),labelAr:labelArByUrl[edge.sourceUrl],role:"RELATIONSHIP_EVIDENCE",record:{kind:"Connection",id:edge.id,label:edge.label,labelAr:connectionEdgeAr[edge.id]?.label??edge.label,href:"/connections"},sourceKind:edge.evidenceMeta.sourceKind,reviewedOn:edge.evidenceMeta.verifiedOn,sensitivity:edge.evidenceMeta.sensitivity});
 }
-for(const item of [...rulerPeriods,...historicalMilestones]){
-  add({url:item.sourceUrl,label:item.sourceLabel,labelAr:labelArByUrl[item.sourceUrl],role:"TIMELINE_EVIDENCE",record:{kind:"Timeline",id:item.year+"-"+item.title,label:item.title,labelAr:(rulerAr[item.year]?.[0]??milestoneAr[item.year]?.[0]??item.title),href:"/timeline"}});
+for(const item of rulerPeriods){
+  add({url:item.sourceUrl,label:item.sourceLabel,labelAr:labelArByUrl[item.sourceUrl],role:"TIMELINE_EVIDENCE",record:{kind:"Timeline",id:item.id,label:item.title,labelAr:rulerAr[item.id]?.[0]??item.title,href:"/timeline"}});
+}
+for(const item of historicalMilestones){
+  add({url:item.sourceUrl,label:item.sourceLabel,labelAr:labelArByUrl[item.sourceUrl],role:"TIMELINE_EVIDENCE",record:{kind:"Timeline",id:item.id,label:item.title,labelAr:milestoneAr[item.id]?.[0]??item.title,href:"/timeline"}});
 }
 for(const item of mapRecords){
   add({url:item.sourceUrl,label:item.sourceLabel,labelAr:labelArByUrl[item.sourceUrl],role:"GEOGRAPHIC_EVIDENCE",record:{kind:"Map",id:item.id,label:item.name,labelAr:mapRecordAr[item.id]?.name??item.name,href:"/map"}});

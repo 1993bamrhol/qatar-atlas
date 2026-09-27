@@ -2,7 +2,8 @@
 import {useMemo,useState} from "react";
 import Link from "next/link";
 import {graphEdges,graphNodes,nodeById,type GraphNodeKind} from "@/data/connections";
-import {connectionEdgeAr,connectionNodeAr,evidenceSensitivityAr,graphKindAr,relationshipAr} from "@/data/connections-ar";
+import {connectionEdgeAr,connectionNodeAr,graphKindAr} from "@/data/connections-ar";
+import {relationshipLabel,sensitivityLabel,sourceKindLabel} from "@/lib/evidence-i18n";
 import {RelationshipBadge,VerificationBadge} from "@/components/ui/badge";
 
 const kinds:["All",...GraphNodeKind[]]=["All","Leadership","Institution","Strategy","Project","Place"];
@@ -27,7 +28,7 @@ export function ConnectionsExplorer({locale="en"}:{locale?:"ar"|"en"}){
   return <><div className="qa-connections-toolbar"><div className="qa-container"><div className="qa-connections-controls">
     <input aria-label={ar?"البحث في روابط قطر":"Search Qatar Connections"} placeholder={ar?"ابحث عن أشخاص أو مؤسسات أو مشاريع…":"Search people, institutions, projects…"} value={query} onChange={e=>setQuery(e.target.value)}/>
     <div className="qa-filter-row">{kinds.map(k=><button key={k} type="button" aria-pressed={kind===k} className={kind===k?"is-active":""} onClick={()=>setKind(k)}>{ar?kindFilterAr[k]:k}</button>)}</div>
-    <div className="qa-filter-row qa-filter-row--relationship">{relationships.map(r=><button key={r} type="button" aria-pressed={relationship===r} className={relationship===r?"is-active":""} onClick={()=>setRelationship(r)}>{ar?(r==="All"?"الكل":relationshipAr[r]):r}</button>)}</div>
+    <div className="qa-filter-row qa-filter-row--relationship">{relationships.map(r=><button key={r} type="button" aria-pressed={relationship===r} className={relationship===r?"is-active":""} onClick={()=>setRelationship(r)}>{r==="All"?(ar?"الكل":"All"):relationshipLabel(r,locale)}</button>)}</div>
   </div></div></div>
   <section className="qa-section"><div className="qa-container">
     <div className="qa-graph-stats"><strong>{graphNodes.length}</strong><span>{ar?"عقد موثقة":"verified nodes"}</span><strong>{graphEdges.length}</strong><span>{ar?"علاقات مدعومة بالأدلة":"evidence-backed relationships"}</span></div>
@@ -37,7 +38,7 @@ export function ConnectionsExplorer({locale="en"}:{locale?:"ar"|"en"}){
         <h2>{ar?connectionNodeAr[node.id]??node.label:node.label}</h2>
         {node.href&&<Link className="qa-text-link" href={`/${locale}${node.href}`}>{ar?"افتح سجل الأطلس ←":"Open Atlas record →"}</Link>}
         <div className="qa-graph-evidence"><p className="qa-card-label">{ar?"علاقات مدعومة بالأدلة":"EVIDENCE-BACKED CONNECTIONS"}</p>
-          {edges.length?edges.map(edge=>{const other=nodeById(edge.from===node.id?edge.to:edge.from);const translated=connectionEdgeAr[edge.id];return <article key={edge.id}><div><strong>{other?(ar?connectionNodeAr[other.id]??other.label:other.label):""}</strong><RelationshipBadge type={edge.relationship} locale={locale}/></div><p>{ar?translated?.label??edge.label:edge.label}</p><small>{ar?translated?.evidence??edge.evidence:edge.evidence}</small><small>{ar?`مصدر رسمي أولي · مراجعة السجل ${edge.evidenceMeta.verifiedOn} · ${evidenceSensitivityAr[edge.evidenceMeta.sensitivity]}`:`PRIMARY OFFICIAL · record reviewed ${edge.evidenceMeta.verifiedOn} · ${edge.evidenceMeta.sensitivity.replaceAll("_"," ")}`}</small><a href={edge.sourceUrl} target="_blank" rel="noreferrer">{ar?"مصدر الدليل ↗":"Evidence source ↗"}</a></article>}):<p className="qa-source-note">{ar?"لا توجد علاقة ضمن مرشح العلاقات الحالي. اختر عقدة أخرى أو نوع علاقة مختلفًا.":"No connection under the current relationship filter. Select another node or relationship type."}</p>}
+          {edges.length?edges.map(edge=>{const other=nodeById(edge.from===node.id?edge.to:edge.from);const translated=connectionEdgeAr[edge.id];return <article key={edge.id}><div><strong>{other?(ar?connectionNodeAr[other.id]??other.label:other.label):""}</strong><RelationshipBadge type={edge.relationship} locale={locale}/></div><p>{ar?translated?.label??edge.label:edge.label}</p><small>{ar?translated?.evidence??edge.evidence:edge.evidence}</small><small>{ar?`${sourceKindLabel(edge.evidenceMeta.sourceKind,locale)} · مراجعة السجل ${edge.evidenceMeta.verifiedOn} · ${sensitivityLabel(edge.evidenceMeta.sensitivity,locale)}`:`${sourceKindLabel(edge.evidenceMeta.sourceKind,locale)} · record reviewed ${edge.evidenceMeta.verifiedOn} · ${sensitivityLabel(edge.evidenceMeta.sensitivity,locale)}`}</small><a href={edge.sourceUrl} target="_blank" rel="noreferrer">{ar?"مصدر الدليل ↗":"Evidence source ↗"}</a></article>}):<p className="qa-source-note">{ar?"لا توجد علاقة ضمن مرشح العلاقات الحالي. اختر عقدة أخرى أو نوع علاقة مختلفًا.":"No connection under the current relationship filter. Select another node or relationship type."}</p>}
         </div>
       </>:null}</aside>
     </div>

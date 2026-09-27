@@ -23,13 +23,16 @@ for(const token of [
   'for(const project of projects)',
   'for(const person of leaders)',
   'for(const edge of graphEdges)',
-  'for(const item of [...rulerPeriods,...historicalMilestones])',
+  'for(const item of rulerPeriods)',
+  'for(const item of historicalMilestones)',
   'for(const item of mapRecords)'
 ])assert(registry.includes(token),"Source registry builder missing canonical coverage contract: "+token);
 assert(registry.includes('if(!args.url||args.url.startsWith("/"))return;'),"Internal methodology links must not be treated as external evidence sources");
 assert(registry.includes("labelAr:string"),"Linked source records must carry an Arabic display label");
 assert(registry.includes("access:SourceAccessAudit"),"Registry entries must expose source-access audit metadata");
 for(const token of ['connectionEdgeAr','mapRecordAr','rulerAr','milestoneAr'])assert(registry.includes(token),"Arabic source-registry reuse missing: "+token);
+for(const token of ['id:item.id','rulerAr[item.id]','milestoneAr[item.id]'])assert(registry.includes(token),"Timeline source-registry stable-ID contract missing: "+token);
+assert(!registry.includes('item.year+"-"+item.title'),"Timeline source-registry identity must not be derived from mutable year/title display fields");
 
 const health=read("data/source-health.ts");
 const healthEntries=[...health.matchAll(/"(https:\/\/[^"]+)":\{checkedOn:"(\d{4}-\d{2}-\d{2})",nextCheckOn:"(\d{4}-\d{2}-\d{2})",status:"(ACCESSIBLE|REDIRECTED|REVIEW_REQUIRED)"/g)]

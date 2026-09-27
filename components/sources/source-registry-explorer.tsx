@@ -43,7 +43,7 @@ export function SourceRegistryExplorer({locale,entries}:{locale:"ar"|"en";entrie
           <div><dt>{ar?"الفحص التالي":"Next access check"}</dt><dd>{entry.access.nextCheckOn||"—"}</dd></div>
           <div><dt>{ar?"السجلات المرتبطة":"Linked records"}</dt><dd>{entry.records.length}</dd></div>
         </dl>
-        {entry.access.note&&<p className="qa-source-health-note">{ar?"ملاحظة الفحص: ":"Audit note: "}{entry.access.note}</p>}
+        {entry.access.note&&<p className="qa-source-health-note">{ar?"ملاحظة الفحص: ":"Audit note: "}{ar?(entry.access.noteAr??entry.access.note):entry.access.note}</p>}
         <div className="qa-source-links">
           {entry.records.map(record=>record.href?<Link key={record.kind+record.id} href={`/${locale}${record.href}`}><small>{ar?kindAr[record.kind]:record.kind}</small><strong>{ar?record.labelAr:record.label}</strong></Link>:<span key={record.kind+record.id}><small>{ar?kindAr[record.kind]:record.kind}</small><strong>{record.label}</strong></span>)}
         </div>

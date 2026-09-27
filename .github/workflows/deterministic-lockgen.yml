@@ -1,0 +1,37 @@
+name: Deterministic Lockfile Bootstrap
+
+on:
+  push:
+    branches: [develop]
+    paths:
+      - ".github/workflows/deterministic-lockgen.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  lockfile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Generate lockfile and manage Playwright
+        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund --save-dev --save-exact playwright@1.55.0
+      - name: Validate npm ci
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Record resolved top-level versions
+        run: npm ls --depth=0
+      - name: Upload deterministic dependency manifest
+        uses: actions/upload-artifact@v4
+        with:
+          name: deterministic-dependency-manifest-${{ github.sha }}
+          path: |
+            package.json
+            package-lock.json
+          if-no-files-found: error
+          retention-days: 2

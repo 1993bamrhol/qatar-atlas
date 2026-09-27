@@ -9,6 +9,7 @@ import {mapRecordAr} from "@/data/map-ar";
 import {rulerPeriods,historicalMilestones} from "@/data/timeline";
 import {rulerAr,milestoneAr} from "@/data/timeline-ar";
 import type {EvidenceSensitivity,EvidenceMeta} from "@/types";
+import {sourceHealthByUrl,type SourceAccessAudit} from "@/data/source-health";
 
 export type SourceRole="PRIMARY_RECORD"|"SUPPORTING_RECORD"|"RELATIONSHIP_EVIDENCE"|"TIMELINE_EVIDENCE"|"GEOGRAPHIC_EVIDENCE";
 export type SourceRecordKind="Project"|"Leadership"|"Connection"|"Timeline"|"Map";
@@ -25,6 +26,7 @@ export type SourceRegistryEntry={
   sourceKinds:EvidenceMeta["sourceKind"][];
   reviewedOn:string[];
   sensitivities:EvidenceSensitivity[];
+  access:SourceAccessAudit;
 };
 
 const labelEnByUrl:Record<string,string>={"https://www.lusail.com/the-city-of-a-lifetime/":"Lusail · The City of a Lifetime"};
@@ -82,7 +84,7 @@ function add(args:{url:string;label?:string;labelAr?:string;role:SourceRole;reco
   if(!args.url||args.url.startsWith("/"))return;
   const url=cleanUrl(args.url);
   const [pub,pubAr]=publisher(url);
-  const existing=entries.get(url)??{id:idFor(url),label:args.label??fallbackLabel(url),labelAr:args.labelAr??labelArByUrl[url]??args.label??fallbackLabel(url),url,publisher:pub,publisherAr:pubAr,roles:[],records:[],sourceKinds:[],reviewedOn:[],sensitivities:[]};
+  const existing=entries.get(url)??{id:idFor(url),label:args.label??fallbackLabel(url),labelAr:args.labelAr??labelArByUrl[url]??args.label??fallbackLabel(url),url,publisher:pub,publisherAr:pubAr,roles:[],records:[],sourceKinds:[],reviewedOn:[],sensitivities:[],access:sourceHealthByUrl[url]??{checkedOn:"",nextCheckOn:"",status:"REVIEW_REQUIRED",note:"No source-access audit is recorded yet."}};
   if(args.label&&!existing.label)existing.label=args.label;
   if(args.labelAr)existing.labelAr=args.labelAr;
   if(!existing.roles.includes(args.role))existing.roles.push(args.role);
@@ -120,5 +122,7 @@ export const sourceRegistryStats={
   sources:sourceRegistry.length,
   publishers:new Set(sourceRegistry.map(x=>x.publisher)).size,
   linkedRecords:sourceRegistry.reduce((sum,x)=>sum+x.records.length,0),
-  reviewedSources:sourceRegistry.filter(x=>x.reviewedOn.length>0).length
+  reviewedSources:sourceRegistry.filter(x=>x.reviewedOn.length>0).length,
+  accessAuditedSources:sourceRegistry.filter(x=>x.access.checkedOn).length,
+  reviewRequiredSources:sourceRegistry.filter(x=>x.access.status==="REVIEW_REQUIRED").length
 };

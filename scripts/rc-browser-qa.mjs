@@ -25,11 +25,14 @@ try{
   for(const mode of modes){
     const context=await browser.newContext({viewport:mode.viewport,deviceScaleFactor:1,isMobile:mode.mobile});
     const page=await context.newPage();
-    page.on("pageerror",err=>fail(mode.name,"[pageerror]",err.message));
-    page.on("console",msg=>{if(msg.type()==="error") fail(mode.name,"[console]",msg.text())});
+    let currentPath="";
+    page.on("pageerror",err=>fail(mode.name,currentPath||"[pageerror]",err.message));
+    page.on("console",msg=>{if(msg.type()==="error"&&!/Failed to load resource: the server responded with a status of 404/i.test(msg.text())) fail(mode.name,currentPath||"[console]",msg.text())});
+    page.on("response",response=>{const status=response.status();if(status<400)return;const resourceType=response.request().resourceType();const url=response.url();const expectedDocument404=resourceType==="document"&&url.includes("/release-candidate-missing-route");if(!expectedDocument404)fail(mode.name,currentPath||"[response]",`${resourceType} HTTP ${status} · ${url}`)});
 
     for(const route of routes){
       const path=`/${mode.locale}${route}`;
+      currentPath=path;
       const response=await page.goto(base+path,{waitUntil:"networkidle",timeout:30000});
       if(!response){fail(mode.name,path,"no navigation response");continue}
       if(response.status()>=400) fail(mode.name,path,`unexpected HTTP ${response.status()}`);
@@ -54,7 +57,8 @@ try{
     }
 
     // Language switch must preserve the current route.
-    await page.goto(base+`/${mode.locale}/sources`,{waitUntil:"networkidle"});
+    currentPath=`/${mode.locale}/sources`;
+    await page.goto(base+currentPath,{waitUntil:"networkidle"});
     const switchHref=await page.locator(".qa-language a").getAttribute("href");
     const other=mode.locale==="en"?"ar":"en";
     if(switchHref!==`/${other}/sources`) fail(mode.name,"/sources",`language switch href=${switchHref}`);
@@ -63,12 +67,14 @@ try{
     if(await page.locator(".qa-source-toolbar").count()!==1) fail(mode.name,"/sources","source toolbar missing");
     if(await page.locator(".qa-source-list .qa-source-card").count()<20) fail(mode.name,"/sources","source registry rendered fewer than 20 source cards");
 
-    await page.goto(base+`/${mode.locale}/connections`,{waitUntil:"networkidle"});
+    currentPath=`/${mode.locale}/connections`;
+    await page.goto(base+currentPath,{waitUntil:"networkidle"});
     if(await page.locator(".qa-graph-canvas").count()!==1) fail(mode.name,"/connections","graph canvas missing");
     if(await page.locator(".qa-connections-controls input").count()!==1) fail(mode.name,"/connections","connections search missing");
 
     if(mode.mobile){
-      await page.goto(base+`/${mode.locale}`,{waitUntil:"networkidle"});
+      currentPath=`/${mode.locale}`;
+      await page.goto(base+currentPath,{waitUntil:"networkidle"});
       const toggle=page.locator(".qa-menu-toggle");
       if(!(await toggle.isVisible())) fail(mode.name,"/","mobile menu toggle not visible");
       else{
@@ -82,12 +88,14 @@ try{
     }
 
     // Expected 404.
-    const missing=await page.goto(base+`/${mode.locale}/release-candidate-missing-route`,{waitUntil:"networkidle"});
+    currentPath=`/${mode.locale}/release-candidate-missing-route`;
+    const missing=await page.goto(base+currentPath,{waitUntil:"networkidle"});
     if(!missing||missing.status()!==404) fail(mode.name,"/404",`expected HTTP 404, got ${missing?.status()??"none"}`);
 
     // Release evidence screenshots.
     for(const [label,route] of screenshotRoutes){
-      await page.goto(base+`/${mode.locale}${route}`,{waitUntil:"networkidle"});
+      currentPath=`/${mode.locale}${route}`;
+      await page.goto(base+currentPath,{waitUntil:"networkidle"});
       await page.screenshot({path:`${outDir}/${mode.name}-${label}.png`,fullPage:true});
     }
 

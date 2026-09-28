@@ -8,12 +8,12 @@ import {mapRecords} from "@/data/map";
 import {mapRecordAr} from "@/data/map-ar";
 import {rulerPeriods,historicalMilestones} from "@/data/timeline";
 import {rulerAr,milestoneAr} from "@/data/timeline-ar";
-import type {EvidenceSensitivity,EvidenceMeta} from "@/types";
+import type {EvidenceSensitivity,EvidenceMeta,EvidenceReviewMeta} from "@/types";
 import {sourceHealthByUrl,type SourceAccessAudit} from "@/data/source-health";
 
 export type SourceRole="PRIMARY_RECORD"|"SUPPORTING_RECORD"|"RELATIONSHIP_EVIDENCE"|"TIMELINE_EVIDENCE"|"GEOGRAPHIC_EVIDENCE";
 export type SourceRecordKind="Project"|"Leadership"|"Connection"|"Timeline"|"Map";
-export type SourceRecordRef={kind:SourceRecordKind;id:string;label:string;labelAr:string;href?:string};
+export type SourceRecordRef={kind:SourceRecordKind;id:string;label:string;labelAr:string;href?:string;evidence?:EvidenceReviewMeta};
 export type SourceRegistryEntry={
   id:string;
   label:string;
@@ -88,7 +88,7 @@ function add(args:{url:string;label?:string;labelAr?:string;role:SourceRole;reco
   if(args.label&&!existing.label)existing.label=args.label;
   if(args.labelAr)existing.labelAr=args.labelAr;
   if(!existing.roles.includes(args.role))existing.roles.push(args.role);
-  if(!existing.records.some(r=>r.kind===args.record.kind&&r.id===args.record.id))existing.records.push(args.record);
+  if(!existing.records.some(r=>r.kind===args.record.kind&&r.id===args.record.id)){const evidence=args.sourceKind&&args.sensitivity?{sourceKind:args.sourceKind,sensitivity:args.sensitivity,...(args.reviewedOn?{reviewedOn:args.reviewedOn}:{})}:undefined;existing.records.push({...args.record,...(evidence?{evidence}:{})});}
   if(args.sourceKind&&!existing.sourceKinds.includes(args.sourceKind))existing.sourceKinds.push(args.sourceKind);
   if(args.reviewedOn&&!existing.reviewedOn.includes(args.reviewedOn))existing.reviewedOn.push(args.reviewedOn);
   if(args.sensitivity&&!existing.sensitivities.includes(args.sensitivity))existing.sensitivities.push(args.sensitivity);
@@ -111,13 +111,13 @@ for(const edge of graphEdges){
   add({url:edge.sourceUrl,label:labelEnByUrl[edge.sourceUrl]??(labelArByUrl[edge.sourceUrl]?undefined:fallbackLabel(edge.sourceUrl)),labelAr:labelArByUrl[edge.sourceUrl],role:"RELATIONSHIP_EVIDENCE",record:{kind:"Connection",id:edge.id,label:edge.label,labelAr:connectionEdgeAr[edge.id]?.label??edge.label,href:"/connections"},sourceKind:edge.evidenceMeta.sourceKind,reviewedOn:edge.evidenceMeta.verifiedOn,sensitivity:edge.evidenceMeta.sensitivity});
 }
 for(const item of rulerPeriods){
-  add({url:item.sourceUrl,label:item.sourceLabel,labelAr:labelArByUrl[item.sourceUrl],role:"TIMELINE_EVIDENCE",record:{kind:"Timeline",id:item.id,label:item.title,labelAr:rulerAr[item.id]?.[0]??item.title,href:"/timeline"}});
+  add({url:item.sourceUrl,label:item.sourceLabel,labelAr:labelArByUrl[item.sourceUrl],role:"TIMELINE_EVIDENCE",record:{kind:"Timeline",id:item.id,label:item.title,labelAr:rulerAr[item.id]?.[0]??item.title,href:"/timeline"},sourceKind:item.evidence.sourceKind,reviewedOn:item.evidence.reviewedOn,sensitivity:item.evidence.sensitivity});
 }
 for(const item of historicalMilestones){
-  add({url:item.sourceUrl,label:item.sourceLabel,labelAr:labelArByUrl[item.sourceUrl],role:"TIMELINE_EVIDENCE",record:{kind:"Timeline",id:item.id,label:item.title,labelAr:milestoneAr[item.id]?.[0]??item.title,href:"/timeline"}});
+  add({url:item.sourceUrl,label:item.sourceLabel,labelAr:labelArByUrl[item.sourceUrl],role:"TIMELINE_EVIDENCE",record:{kind:"Timeline",id:item.id,label:item.title,labelAr:milestoneAr[item.id]?.[0]??item.title,href:"/timeline"},sourceKind:item.evidence.sourceKind,reviewedOn:item.evidence.reviewedOn,sensitivity:item.evidence.sensitivity});
 }
 for(const item of mapRecords){
-  add({url:item.sourceUrl,label:item.sourceLabel,labelAr:labelArByUrl[item.sourceUrl],role:"GEOGRAPHIC_EVIDENCE",record:{kind:"Map",id:item.id,label:item.name,labelAr:mapRecordAr[item.id]?.name??item.name,href:"/map"}});
+  add({url:item.sourceUrl,label:item.sourceLabel,labelAr:labelArByUrl[item.sourceUrl],role:"GEOGRAPHIC_EVIDENCE",record:{kind:"Map",id:item.id,label:item.name,labelAr:mapRecordAr[item.id]?.name??item.name,href:"/map"},sourceKind:item.evidence?.sourceKind,reviewedOn:item.evidence?.reviewedOn,sensitivity:item.evidence?.sensitivity});
 }
 
 export const sourceRegistry=[...entries.values()].sort((a,b)=>a.publisher.localeCompare(b.publisher)||a.label.localeCompare(b.label));

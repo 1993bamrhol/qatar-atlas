@@ -33,6 +33,8 @@ assert(registry.includes("access:SourceAccessAudit"),"Registry entries must expo
 for(const token of ['connectionEdgeAr','mapRecordAr','rulerAr','milestoneAr'])assert(registry.includes(token),"Arabic source-registry reuse missing: "+token);
 for(const token of ['id:item.id','rulerAr[item.id]','milestoneAr[item.id]'])assert(registry.includes(token),"Timeline source-registry stable-ID contract missing: "+token);
 assert(!registry.includes('item.year+"-"+item.title'),"Timeline source-registry identity must not be derived from mutable year/title display fields");
+for(const token of ["evidence?:EvidenceReviewMeta","sourceKind:item.evidence.sourceKind","reviewedOn:item.evidence.reviewedOn","sensitivity:item.evidence.sensitivity","sourceKind:item.evidence?.sourceKind","reviewedOn:item.evidence?.reviewedOn","sensitivity:item.evidence?.sensitivity"])assert(registry.includes(token),"Evidence metadata registry propagation missing: "+token);
+assert(registry.includes("existing.records.push({...args.record,...(evidence?{evidence}:{})})"),"Source registry must preserve record-level evidence metadata instead of only URL-level aggregates");
 
 const health=read("data/source-health.ts");
 const healthEntries=[...health.matchAll(/"(https:\/\/[^"]+)":\{checkedOn:"(\d{4}-\d{2}-\d{2})",nextCheckOn:"(\d{4}-\d{2}-\d{2})",status:"(ACCESSIBLE|REDIRECTED|REVIEW_REQUIRED)"/g)]

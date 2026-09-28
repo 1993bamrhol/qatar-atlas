@@ -3,6 +3,7 @@ import {useMemo,useState} from "react";
 import Link from "next/link";
 import type {SourceRegistryEntry,SourceRole} from "@/data/source-registry";
 import {sourceKindLabel,sensitivityLabel} from "@/lib/evidence-i18n";
+import {EvidenceMetadata} from "@/components/ui/evidence-metadata";
 
 const roles:["All",...SourceRole[]]=["All","PRIMARY_RECORD","SUPPORTING_RECORD","RELATIONSHIP_EVIDENCE","TIMELINE_EVIDENCE","GEOGRAPHIC_EVIDENCE"];
 const roleEn:Record<string,string>={All:"All",PRIMARY_RECORD:"Primary record",SUPPORTING_RECORD:"Supporting",RELATIONSHIP_EVIDENCE:"Relationship evidence",TIMELINE_EVIDENCE:"Timeline evidence",GEOGRAPHIC_EVIDENCE:"Geographic evidence"};
@@ -36,16 +37,16 @@ export function SourceRegistryExplorer({locale,entries}:{locale:"ar"|"en";entrie
         </div>
         <div className="qa-source-role-row">{entry.roles.map(r=><span key={r}>{ar?roleAr[r]:roleEn[r]}</span>)}<span className={"qa-source-health qa-source-health--"+entry.access.status.toLowerCase()}>{ar?accessAr[entry.access.status]:accessEn[entry.access.status]}</span></div>
         <dl className="qa-source-meta">
-          <div><dt>{ar?"نوع المصدر":"Source type"}</dt><dd>{entry.sourceKinds.length?entry.sourceKinds.map(x=>sourceKindLabel(x,locale)).join(" · "):(ar?"غير مصنف مستقلًا في بيانات الدليل":"Not independently classified in evidence metadata")}</dd></div>
-          <div><dt>{ar?"مراجعة السجل":"Record review"}</dt><dd>{entry.reviewedOn.length?entry.reviewedOn.join(" · "):(ar?"لا يوجد تاريخ مراجعة مستقل لهذا المصدر":"No independent source-review date recorded")}</dd></div>
-          <div><dt>{ar?"حساسية الزمن":"Time sensitivity"}</dt><dd>{entry.sensitivities.length?entry.sensitivities.map(x=>sensitivityLabel(x,locale)).join(" · "):(ar?"غير مطبقة على هذا النوع من الأدلة":"Not applied to this evidence type")}</dd></div>
+          <div><dt>{ar?"أنواع مصادر السجلات المرتبطة":"Linked-record source types"}</dt><dd>{entry.sourceKinds.length?entry.sourceKinds.map(x=>sourceKindLabel(x,locale)).join(" · "):(ar?"لا يوجد تصنيف مستقل للسجلات المرتبطة":"No linked-record source classification")}</dd></div>
+          <div><dt>{ar?"تواريخ مراجعة الأدلة المرتبطة":"Linked-record evidence review dates"}</dt><dd>{entry.reviewedOn.length?entry.reviewedOn.join(" · "):(ar?"لا توجد تواريخ مراجعة مسجلة للسجلات المرتبطة":"No linked-record review dates recorded")}</dd></div>
+          <div><dt>{ar?"الحساسية الزمنية للسجلات المرتبطة":"Linked-record time sensitivity"}</dt><dd>{entry.sensitivities.length?entry.sensitivities.map(x=>sensitivityLabel(x,locale)).join(" · "):(ar?"لا توجد حساسية زمنية مسجلة للسجلات المرتبطة":"No linked-record time sensitivity recorded")}</dd></div>
           <div><dt>{ar?"فحص المصدر":"Source access check"}</dt><dd>{entry.access.checkedOn|| (ar?"غير مفحوص":"Not checked")}</dd></div>
           <div><dt>{ar?"الفحص التالي":"Next access check"}</dt><dd>{entry.access.nextCheckOn||"—"}</dd></div>
           <div><dt>{ar?"السجلات المرتبطة":"Linked records"}</dt><dd>{entry.records.length}</dd></div>
         </dl>
         {entry.access.note&&<p className="qa-source-health-note">{ar?"ملاحظة الفحص: ":"Audit note: "}{ar?(entry.access.noteAr??entry.access.note):entry.access.note}</p>}
         <div className="qa-source-links">
-          {entry.records.map(record=>record.href?<Link key={record.kind+record.id} href={`/${locale}${record.href}`}><small>{ar?kindAr[record.kind]:record.kind}</small><strong>{ar?record.labelAr:record.label}</strong></Link>:<span key={record.kind+record.id}><small>{ar?kindAr[record.kind]:record.kind}</small><strong>{record.label}</strong></span>)}
+          {entry.records.map(record=>record.href?<Link key={record.kind+record.id} href={`/${locale}${record.href}`}><small>{ar?kindAr[record.kind]:record.kind}</small><strong>{ar?record.labelAr:record.label}</strong><EvidenceMetadata evidence={record.evidence} locale={locale} showSourceKind compact/></Link>:<span key={record.kind+record.id}><small>{ar?kindAr[record.kind]:record.kind}</small><strong>{ar?record.labelAr:record.label}</strong><EvidenceMetadata evidence={record.evidence} locale={locale} showSourceKind compact/></span>)}
         </div>
       </article>)}
       {!filtered.length&&<div className="qa-graph-empty">{ar?"لا توجد مصادر تطابق هذا البحث.":"No sources match this search."}</div>}

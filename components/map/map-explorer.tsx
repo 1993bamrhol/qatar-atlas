@@ -4,6 +4,7 @@ import {useMemo,useState} from "react";
 import Link from "next/link";
 import {mapRecords,type MapCategory,type GeoStatus} from "@/data/map";
 import {geoStatusAr,mapCategoryAr,mapRecordAr} from "@/data/map-ar";
+import {EvidenceMetadata} from "@/components/ui/evidence-metadata";
 
 const categories:["All",...MapCategory[]]=["All","Transport","Logistics","Urban","Free Zones","Institutions"];
 const statusLabel:Record<GeoStatus,string>={AREA_VERIFIED:"AREA VERIFIED",PIN_VERIFIED:"PIN VERIFIED",REVIEW_REQUIRED:"REVIEW REQUIRED"};
@@ -38,6 +39,7 @@ export function MapExplorer({locale="en"}:{locale?:"ar"|"en"}){
         <div className="qa-map-related"><p className="qa-card-label">{ar?"السجلات المرتبطة":"CONNECTED RECORDS"}</p>{(ar?t?.relatedRecords??record.relatedRecords:record.relatedRecords).map(x=><span key={x}>{x}</span>)}</div>
         <div className="qa-map-source"><p className="qa-card-label">{ar?"الأدلة الجغرافية":"GEOGRAPHIC EVIDENCE"}</p>
           {record.sourceUrl.startsWith("/")?<Link href={`/${locale}${record.sourceUrl}`}>{ar?t?.sourceLabel??"منهجية أطلس قطر":record.sourceLabel} →</Link>:<a href={record.sourceUrl} target="_blank" rel="noreferrer">{ar?t?.sourceLabel??record.sourceLabel:record.sourceLabel} ↗</a>}
+          <EvidenceMetadata evidence={record.evidence} locale={locale} showSourceKind compact/>
           <small>{ar?`${t?.verificationNote??record.verificationNote} ولا تتحول أدلة مستوى المنطقة تلقائيًا إلى علامة عامة دقيقة.`:`${record.verificationNote} Area-level evidence never becomes an exact public pin automatically.`}</small>
         </div>
       </>})()}</aside>

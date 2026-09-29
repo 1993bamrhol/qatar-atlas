@@ -7,6 +7,9 @@ export default defineConfig({
       "@":fileURLToPath(new URL(".",import.meta.url))
     }
   },
+  oxc:{
+    jsx:{runtime:"automatic"}
+  },
   test:{
     environment:"node",
     include:["tests/**/*.test.ts"]

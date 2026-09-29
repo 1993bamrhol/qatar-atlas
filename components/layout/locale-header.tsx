@@ -4,7 +4,8 @@ import Link from "next/link";
 import {usePathname} from "next/navigation";
 import {Container} from "./container";
 import {NAV_ITEMS} from "@/lib/constants";
-import {getDictionary} from "@/lib/dictionary";\nimport {switchLocalePath} from "@/lib/i18n";
+import {getDictionary} from "@/lib/dictionary";
+import {switchLocalePath} from "@/lib/i18n";
 import type {Locale} from "@/types";
 
 export function LocaleHeader({locale}:{locale:Locale}){
@@ -12,7 +13,7 @@ export function LocaleHeader({locale}:{locale:Locale}){
   const [open,setOpen]=useState(false);
   const d=getDictionary(locale);
   const other:Locale=locale==="en"?"ar":"en";
-  const rest=pathname.replace(/^\/(en|ar)(?=\/|$)/,"")||"";
+  const switchHref=switchLocalePath(pathname,locale);
   const menuLabel=locale==="ar"?(open?"إغلاق القائمة":"فتح القائمة"):(open?"Close menu":"Open menu");
   return <><a className="qa-skip-link" href="#main-content">{locale==="ar"?"تجاوز إلى المحتوى":"Skip to content"}</a><header className="qa-header">
     <Container className="qa-nav">

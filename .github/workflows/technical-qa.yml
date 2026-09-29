@@ -26,6 +26,8 @@ jobs:
         run: npm ci
       - name: TypeScript check
         run: npm run typecheck
+      - name: Focused behavioral tests
+        run: npm run test:focused
       - name: Route integrity
         run: npm run check:routes
       - name: Project content audit

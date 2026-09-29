@@ -23,7 +23,7 @@ describe("EvidenceMetadata",()=>{
       locale:"en"
     }));
     expect(html).toContain("Evidence review date");
-    expect(html).toContain('datetime="2026-09-28"');
+    expect(html).toContain('dateTime="2026-09-28"');
     expect(html).toContain("HISTORICAL");
     expect(html).not.toContain("Source type");
   });
@@ -40,6 +40,6 @@ describe("EvidenceMetadata",()=>{
     expect(html).toContain("تاريخ مراجعة الدليل");
     expect(html).toContain("الحساسية الزمنية");
     expect(html).toContain("مستقر");
-    expect(html).toContain('datetime="2026-09-28"');
+    expect(html).toContain('dateTime="2026-09-28"');
   });
 });

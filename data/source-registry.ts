@@ -9,7 +9,7 @@ import {mapRecordAr} from "@/data/map-ar";
 import {rulerPeriods,historicalMilestones} from "@/data/timeline";
 import {rulerAr,milestoneAr} from "@/data/timeline-ar";
 import type {EvidenceSensitivity,EvidenceMeta,EvidenceReviewMeta} from "@/types";
-import {sourceHealthByUrl,type SourceAccessAudit} from "@/data/source-health";
+import {resolveSourceUrlAlias,sourceHealthByUrl,type SourceAccessAudit} from "@/data/source-health";
 
 export type SourceRole="PRIMARY_RECORD"|"SUPPORTING_RECORD"|"RELATIONSHIP_EVIDENCE"|"TIMELINE_EVIDENCE"|"GEOGRAPHIC_EVIDENCE";
 export type SourceRecordKind="Project"|"Leadership"|"Connection"|"Timeline"|"Map";
@@ -52,14 +52,14 @@ const labelArByUrl:Record<string,string>={
 "https://qfz.gov.qa/authority/":"هيئة المناطق الحرة في قطر · نبذة عن الهيئة",
 "https://qfz.gov.qa/_umm_alhoul/":"هيئة المناطق الحرة في قطر · أم الحول",
 "https://qfz.gov.qa/ras-bufontas-4/":"هيئة المناطق الحرة في قطر · راس بوفنطاس",
-"https://www.mcit.gov.qa/en/nda":"وزارة الاتصالات وتكنولوجيا المعلومات · الأجندة الرقمية 2030",
+"https://www.mcit.gov.qa/en/about-us/digital-agenda-2030":"وزارة الاتصالات وتكنولوجيا المعلومات · الأجندة الرقمية 2030",
 "https://www.mcit.gov.qa/en/artificial-intelligence-committee/":"وزارة الاتصالات وتكنولوجيا المعلومات · لجنة الذكاء الاصطناعي",
 "https://www.mcit.gov.qa/-/media/mcit/documents/strategies/national_artificial_intelligence_strategy_for_qatar_2019_en.pdf":"وزارة الاتصالات وتكنولوجيا المعلومات · الاستراتيجية الوطنية للذكاء الاصطناعي 2019",
 "https://www.mcit.gov.qa/en/news/he-the-minister-we-envision-fanar-as-high-accuracy-arabic-llm-capable-of-processing-and-understanding-natural-arabic":"وزارة الاتصالات وتكنولوجيا المعلومات · فنار في منتدى قطر الاقتصادي 2024",
 "https://visitqatar.com/intl-en/plan-your-trip/getting-around/doha-metro":"زوروا قطر · دليل مترو الدوحة"
 };
 
-function cleanUrl(url:string){return url.endsWith("/")?url:url}
+function cleanUrl(url:string){return resolveSourceUrlAlias(url)}
 function publisher(url:string){
   const host=new URL(url).hostname.replace(/^www\./,"");
   const map:Record<string,[string,string]>={

@@ -1,6 +1,11 @@
 export type SourceAccessStatus="ACCESSIBLE"|"REDIRECTED"|"REVIEW_REQUIRED";
 export type SourceAccessAudit={checkedOn:string;nextCheckOn:string;status:SourceAccessStatus;note?:string;noteAr?:string};
 
+export const sourceUrlAliases:Readonly<Record<string,string>>={
+"https://www.mcit.gov.qa/en/nda":"https://www.mcit.gov.qa/en/about-us/digital-agenda-2030"
+};
+export function resolveSourceUrlAlias(url:string){return sourceUrlAliases[url]??url}
+
 export const sourceHealthByUrl:Record<string,SourceAccessAudit>={
 "https://diwan.gov.qa/hh-the-amir/biography?sc_lang=en":{checkedOn:"2026-09-27",nextCheckOn:"2026-10-27",status:"ACCESSIBLE"},
 "https://www.diwan.gov.qa/en/hh-deputy-amir/biography":{checkedOn:"2026-09-27",nextCheckOn:"2026-10-27",status:"ACCESSIBLE"},
@@ -23,7 +28,7 @@ export const sourceHealthByUrl:Record<string,SourceAccessAudit>={
 "https://qfz.gov.qa/authority/":{checkedOn:"2026-09-27",nextCheckOn:"2026-12-26",status:"ACCESSIBLE"},
 "https://qfz.gov.qa/_umm_alhoul/":{checkedOn:"2026-09-27",nextCheckOn:"2026-12-26",status:"ACCESSIBLE"},
 "https://qfz.gov.qa/ras-bufontas-4/":{checkedOn:"2026-09-27",nextCheckOn:"2026-12-26",status:"ACCESSIBLE"},
-"https://www.mcit.gov.qa/en/nda":{checkedOn:"2026-09-27",nextCheckOn:"2026-10-27",status:"ACCESSIBLE"},
+"https://www.mcit.gov.qa/en/about-us/digital-agenda-2030":{checkedOn:"2026-09-27",nextCheckOn:"2026-10-27",status:"ACCESSIBLE",note:"Canonical Digital Agenda 2030 URL is the active source identity; legacy /en/nda is retained as an explicit alias.",noteAr:"الرابط القانوني للأجندة الرقمية 2030 هو هوية المصدر النشطة؛ ويُحتفظ بالمسار القديم /en/nda كاسم مستعار صريح."},
 "https://www.mcit.gov.qa/en/artificial-intelligence-committee/":{checkedOn:"2026-09-27",nextCheckOn:"2026-10-27",status:"ACCESSIBLE"},
 "https://www.mcit.gov.qa/-/media/mcit/documents/strategies/national_artificial_intelligence_strategy_for_qatar_2019_en.pdf":{checkedOn:"2026-09-27",nextCheckOn:"2027-03-26",status:"ACCESSIBLE"},
 "https://www.mcit.gov.qa/en/news/he-the-minister-we-envision-fanar-as-high-accuracy-arabic-llm-capable-of-processing-and-understanding-natural-arabic":{checkedOn:"2026-09-27",nextCheckOn:"2026-11-26",status:"ACCESSIBLE",note:"Canonical no-trailing-slash URL confirmed during the source audit.",noteAr:"تم تأكيد الرابط القانوني بدون الشرطة المائلة النهائية خلال تدقيق المصادر."},

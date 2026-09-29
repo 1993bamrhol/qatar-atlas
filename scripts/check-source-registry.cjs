@@ -36,10 +36,24 @@ assert(!registry.includes('item.year+"-"+item.title'),"Timeline source-registry 
 for(const token of ["evidence?:EvidenceReviewMeta","sourceKind:item.evidence.sourceKind","reviewedOn:item.evidence.reviewedOn","sensitivity:item.evidence.sensitivity","sourceKind:item.evidence?.sourceKind","reviewedOn:item.evidence?.reviewedOn","sensitivity:item.evidence?.sensitivity"])assert(registry.includes(token),"Evidence metadata registry propagation missing: "+token);
 assert(registry.includes("existing.records.push({...args.record,...(evidence?{evidence}:{})})"),"Source registry must preserve record-level evidence metadata instead of only URL-level aggregates");
 
+const digitalAgendaLegacy="https://www.mcit.gov.qa/en/nda";
+const digitalAgendaCanonical="https://www.mcit.gov.qa/en/about-us/digital-agenda-2030";
+const projects=read("data/projects.ts");
+assert(projects.includes('sourceLabel:"MCIT · Digital Agenda 2030",sourceUrl:"'+digitalAgendaCanonical+'"'),"Digital Agenda project must display the approved canonical MCIT URL");
+assert(!projects.includes('sourceUrl:"'+digitalAgendaLegacy+'"'),"Digital Agenda project must not expose the legacy MCIT URL");
+assert(registry.includes('resolveSourceUrlAlias'),"Source registry must resolve the explicit Digital Agenda legacy alias before identity lookup");
+assert(registry.includes('"'+digitalAgendaCanonical+'":"وزارة الاتصالات وتكنولوجيا المعلومات · الأجندة الرقمية 2030"'),"Digital Agenda Arabic source label must be keyed by the canonical URL");
+assert(!registry.includes('"'+digitalAgendaLegacy+'":"وزارة الاتصالات وتكنولوجيا المعلومات · الأجندة الرقمية 2030"'),"Legacy Digital Agenda URL must not remain a displayed Source Registry label key");
+
 const health=read("data/source-health.ts");
 const healthEntries=[...health.matchAll(/"(https:\/\/[^"]+)":\{checkedOn:"(\d{4}-\d{2}-\d{2})",nextCheckOn:"(\d{4}-\d{2}-\d{2})",status:"(ACCESSIBLE|REDIRECTED|REVIEW_REQUIRED)"/g)]
   .map(m=>({url:m[1],checkedOn:m[2],nextCheckOn:m[3],status:m[4]}));
 const healthMap=new Map(healthEntries.map(x=>[x.url,x]));
+assert(health.includes('"'+digitalAgendaLegacy+'":"'+digitalAgendaCanonical+'"'),"Digital Agenda legacy-to-canonical alias mapping must remain explicit");
+assert(healthMap.has(digitalAgendaCanonical),"Canonical Digital Agenda URL must have source-health coverage");
+assert(!healthMap.has(digitalAgendaLegacy),"Legacy Digital Agenda URL must not create a second source-health identity");
+assert([...external].filter(url=>url===digitalAgendaCanonical).length===1,"Canonical Digital Agenda URL must appear once in canonical evidence URLs");
+assert(!external.has(digitalAgendaLegacy),"Legacy Digital Agenda URL must not remain in canonical evidence URLs");
 assert(healthMap.size===healthEntries.length,"Duplicate source-access audit URL detected");
 for(const url of external)assert(healthMap.has(url),"Missing source-access audit: "+url);
 for(const url of healthMap.keys())assert(external.has(url),"Source-access audit has no canonical evidence URL: "+url);

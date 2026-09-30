@@ -18,7 +18,8 @@
     "check:perf": "node scripts/check-performance-budget.cjs",
     "check:data-safety": "node scripts/check-production-data-safety.cjs",
     "check:sources": "node scripts/check-source-registry.cjs",
-    "check:rc": "node scripts/check-release-candidate.cjs"
+    "check:rc": "node scripts/check-release-candidate.cjs",
+    "test:focused": "vitest run"
   },
   "dependencies": {
     "next": "^15.5.0",
@@ -32,6 +33,7 @@
     "@types/react-dom": "^19",
     "playwright": "1.55.0",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "5.0.2"
   }
 }

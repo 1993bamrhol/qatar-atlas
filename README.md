@@ -15,8 +15,25 @@ Interactive bilingual, source-backed digital atlas connecting leadership, instit
 - Precise geographic pins only after verification
 - Media rights checked before public use
 
-Phase 2 foundation branch: `develop`.
+## Repository and branch governance
 
+Repository visibility: **Public**.
+
+- Working branch: `develop`
+- Production branch: `main`
+- `main-release-gate`: **Active**
+  - Pull request required before updating `main`
+  - Allowed merge method: **Merge only**
+  - Required checks: `build`, `browser-qa`
+  - Required checks use strict / branch-up-to-date enforcement
+  - Force pushes are blocked
+  - Branch deletion is blocked
+- `develop-integrity`: **Active**
+  - Direct pushes to `develop` remain allowed
+  - Force pushes are blocked
+  - Branch deletion is blocked
+
+Production releases follow the evergreen protocol in `docs/release-candidate.md`. After a production release and post-release verification, `main` is synchronized back into `develop` with a normal lineage-preserving merge before the next development cycle.
 
 ## Production readiness
 
@@ -28,9 +45,10 @@ Recommended production environment:
 
 When deployed on Vercel, the sitemap can also use `VERCEL_PROJECT_PRODUCTION_URL` automatically. If no production URL is available, the sitemap intentionally emits no canonical URLs rather than publishing localhost or a fabricated domain.
 
-Release gate:
+Technical QA / release gate:
 
 `npm run typecheck`
+`npm run test:focused`
 `npm run check:routes`
 `npm run check:content`
 `npm run check:evidence`
@@ -41,12 +59,12 @@ Release gate:
 `npm run check:seo`
 `npm run check:security`
 `npm run check:data-safety`
+`npm run check:rc`
 `npm run build`
 `npm run check:perf`
 
+Release Visual QA runs the browser/device gate that reports the required `browser-qa` check.
+
 Do not publish precise map pins unless the record is `PIN_VERIFIED`. Do not replace official-image placeholders until usage rights have been reviewed.
 
-
-Preview deployment branch: `develop`. Production remains gated on `main` until final launch approval.
-
-Preview deployment refresh: 2026-09-26T20:45:00.000Z
+Preview development uses `develop`. Production remains gated on `main` and requires the explicit release protocol; passing CI or a deployment alone does not authorize production release.

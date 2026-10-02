@@ -1,40 +1,80 @@
-# Qatar Atlas — Release Candidate Gate
+# Qatar Atlas — Evergreen Release Protocol
 
-Release candidate status: **FINAL PRE-MERGE GATE PASSED — FROZEN PRODUCT BASELINE**
+This document defines the durable release-governance contract for Qatar Atlas. It is intentionally release-agnostic: it does not record a current PR number, tested commit SHA, deployment ID, artifact ID, or dated PASS snapshot.
 
-Frozen release baseline: `2bf4fb909ffd1059453bea5540f744b46eee7237`
+Passing CI alone does **not** authorize a Production release. A Vercel deployment reaching `READY` alone does **not** authorize a Production release. Release authority comes from the complete gated lifecycle below and an explicit release command.
 
-This document separates automated release evidence from the final human visual/device check. Passing CI or receiving a READY Vercel deployment does not, by itself, approve a production merge.
+## Branch governance
 
-## Automated gates
+- `develop` is the working branch. Direct pushes are permitted under `develop-integrity`, while branch deletion and non-fast-forward / force-push history changes are blocked.
+- `main` is the production branch. `main-release-gate` requires a pull request, allows the **Merge** method only, requires `build` and `browser-qa`, and enforces strict / branch-up-to-date status checks.
+- Deletion and non-fast-forward / force-push updates are blocked on `main`.
+- Release governance must not be bypassed by changing the tested candidate after certification.
 
-- [x] TypeScript
-- [x] Route integrity
-- [x] Project content audit
-- [x] Evidence integrity audit
-- [x] Source registry and freshness audit
-- [x] Arabic completeness audit
-- [x] Accessibility and responsive contract audit
-- [x] Visual responsive contract audit
-- [x] SEO / SSR audit
-- [x] Production security audit
-- [x] Production data-safety audit
-- [x] Production build
-- [x] Performance budget
-- [x] Latest Preview deployment READY
-- [x] No `error` / `fatal` runtime logs in the latest preview review window
-- [x] Media/portrait policy documented; neutral identity panels used until display rights are confirmed
+## Release lifecycle
 
-## Manual device matrix
+The required lifecycle is:
 
-The same release candidate must be checked on these four presentation modes.
+`develop`
+→ Technical QA + Release Visual QA
+→ **Pre-Merge Certification**
+→ Release PR to `main`
+→ required `build` + `browser-qa`
+→ branch must be up to date
+→ **Final Pre-Merge Gate**
+→ explicit **Release Merge Protocol**
+→ Merge-only into `main`
+→ Production deployment verification
+→ **Post-Merge Smoke QA**
+→ **Post-Release Control**
+→ **`main → develop` lineage synchronization**
+→ Technical QA + Release Visual QA on the sync commit
+→ next development cycle
 
-| Mode | Target viewport | Status |
+Each stage must refer to the same release candidate unless a later gate explicitly re-certifies a changed candidate.
+
+## Candidate identity and SHA drift
+
+The **tested SHA** must match the **approved SHA** used by the release gate.
+
+Any **SHA drift** after testing or certification invalidates the affected approval. The appropriate Technical QA, Release Visual QA, source/runtime review, Pre-Merge Certification, or Final Pre-Merge Gate must be repeated for the new SHA before release can continue.
+
+A release PR must not be treated as approved merely because it is mergeable. Required checks, branch-up-to-date status, release certification, and the explicit release command must all remain valid for the approved SHA.
+
+## Automated Technical QA
+
+The Technical QA contract includes:
+
+- `npm run typecheck`
+- `npm run test:focused`
+- `npm run check:routes`
+- `npm run check:content`
+- `npm run check:evidence`
+- `npm run check:sources`
+- `npm run check:ar`
+- `npm run check:a11y`
+- `npm run check:visual`
+- `npm run check:seo`
+- `npm run check:security`
+- `npm run check:data-safety`
+- `npm run check:rc`
+- `npm run build`
+- `npm run check:perf`
+
+The release candidate checker validates this durable policy document; it must not depend on a historical PR, SHA, deployment, artifact, or dated release result.
+
+## Four presentation modes — EN + AR / Desktop + Mobile
+
+Release Visual QA and final visual review use the same four presentation modes for every candidate:
+
+| Mode | Target viewport | Policy |
 | --- | --- | --- |
-| Desktop · English | 1440 × 900 | PASS — 2026-09-27 |
-| Desktop · Arabic | 1440 × 900 | PASS — 2026-09-27 |
-| Mobile · English | 390 × 844 | PASS — 2026-09-27 |
-| Mobile · Arabic | 390 × 844 | PASS — 2026-09-27 |
+| Desktop · English | 1440 × 900 | Required |
+| Desktop · Arabic | 1440 × 900 | Required |
+| Mobile · English | 390 × 844 | Required |
+| Mobile · Arabic | 390 × 844 | Required |
+
+The candidate reviewed in these modes must be the tested / approved candidate for the release. Evidence for a specific release belongs in its QA or release record, not in this evergreen policy.
 
 ## Critical route set
 
@@ -56,7 +96,7 @@ Each language/device pass should cover the routes below. One project detail and 
 
 ## Visual acceptance criteria
 
-A mode passes only if all of the following are true:
+A presentation mode passes only if all of the following are true:
 
 - No horizontal page overflow.
 - No clipped headings, cards, badges, buttons or source URLs.
@@ -67,49 +107,53 @@ A mode passes only if all of the following are true:
 - Timeline markers/lines stay aligned.
 - Connections controls, graph cards and evidence panel are usable.
 - Map markers/labels do not cover critical controls or overflow the canvas.
-- Source Registry search, filter chips, six-field metadata grid and source links remain usable.
+- Source Registry search, filter chips, metadata grid and source links remain usable.
 - Neutral leadership identity panels look intentional and do not display temporary rights-review copy.
 - Focusable controls remain visibly distinguishable when keyboard-tested on desktop.
 - No unexpected error page, auth loop or broken internal route occurs.
 
-## Evidence to record
+## Release evidence policy
 
-For each of the four modes, record:
+Per-release evidence should record, outside this evergreen policy:
 
-1. Preview deployment URL / commit.
-2. Browser/device.
-3. Screenshots for Home, one dense explorer (Connections or Map), and Sources.
-4. Any defect found and the commit that fixes it.
-5. Final PASS date.
+1. candidate / approved SHA;
+2. relevant Technical QA and Release Visual QA runs;
+3. preview or production deployment identity when applicable;
+4. browser/device evidence and screenshots;
+5. defects and the SHA that fixes them;
+6. source/runtime review where required;
+7. final gate decisions.
 
-## Device QA evidence — 2026-09-27
-
-- Candidate product commit / frozen release baseline: `2bf4fb909ffd1059453bea5540f744b46eee7237`.
-- Browser engine: Playwright Chromium 1.55.0, headless Linux.
-- Technical QA: PASS on `2bf4fb909ffd1059453bea5540f744b46eee7237`.
-- Release Visual QA: PASS on `2bf4fb909ffd1059453bea5540f744b46eee7237`.
-- Automated browser result: PASS — 4 presentation modes × 10 critical localized routes = 40 route/device checks.
-- Automated checks included: HTTP success, HTML `lang`/`dir`, horizontal overflow, main landmark, temporary media-rights copy, route-preserving language switch, Source Registry rendering, Connections rendering, mobile menu behavior, and expected 404 behavior.
-- Screenshot artifact: `qatar-atlas-rc-visual-2bf4fb909ffd1059453bea5540f744b46eee7237` (Artifact ID `10937250277`; 12 screenshots: Home, Connections and Sources for each mode).
-- Human visual review: PASS — the new 12 screenshots for `2bf4fb909ffd1059453bea5540f744b46eee7237` were reviewed for EN/AR parity, Desktop/Mobile presentation, hierarchy, clipping, RTL/LTR, card balance, Connections evidence layout, Source Registry readability and mobile stacking.
-- Leadership, Timeline and Map presentation was cross-checked through the Home previews plus the four-mode critical-route browser QA on their dedicated routes.
-- Current Vercel preview deployment: `dpl_CvzAa55tJP5875qjYk3EA9c44bRA` — READY from `develop` at `2bf4fb909ffd1059453bea5540f744b46eee7237`.
-- Runtime review: no `error` / `fatal` logs found for the current preview in the reviewed window.
-- Source freshness spot-check: PASS — current official leadership, national-vision, energy and digital-strategy sources were re-checked; no release-blocking freshness conflict was found.
-- No release-blocking visual, runtime, source/evidence or bilingual presentation defect was observed in the re-certification evidence.
+Historical release evidence must not be presented in this file as the current release state.
 
 ## Production rule
 
-Do **not** mark PR #1 ready and do **not** merge `develop` into `main` while any manual device mode remains `PENDING` or `FAIL`.
+Production release requires all applicable gates to pass for the approved SHA and requires an explicit **Release Merge Protocol** command.
 
-After all four modes pass:
-1. update every mode above to `PASS — YYYY-MM-DD`;
-2. run `npm run check:rc`;
-3. update PR #1 from Draft to Ready for Review;
-4. merge only after one final source/runtime spot-check.
+The following are not sufficient on their own:
 
-The frozen product baseline for this certification is `2bf4fb909ffd1059453bea5540f744b46eee7237`. Do **not** merge `develop` into `main` if a subsequent product-code change has been introduced without re-certification.
+- CI success;
+- a mergeable PR;
+- Vercel `READY`;
+- a successful preview deployment;
+- a prior release's certification.
 
-The documentation commit that records this certification does not alter the frozen product baseline.
+When a blocker is found, stop the release at the relevant gate. Do **not** perform an automatic rollback, fix, redeploy, merge, or candidate substitution unless a separate explicit instruction authorizes that action.
 
-Production merge requires a separate explicit release command followed by production deployment verification and post-merge smoke QA.
+After Merge-only into `main`, verify the production deployment and complete **Post-Merge Smoke QA** followed by **Post-Release Control** before declaring the release stable.
+
+## Post-release lineage synchronization
+
+After Production release verification and Post-Release Control, perform **`main → develop` lineage synchronization** before the next development cycle when `develop` does not already contain the current production lineage.
+
+Synchronization must use a **normal merge** from `main` into `develop` and preserve repository history:
+
+- **no force push**
+- **no reset**
+- **no history rewrite**
+- no rebase-based history rewriting
+- no manual file changes solely to manufacture lineage
+
+For a lineage-only synchronization where the branch trees were already identical, the file diff must remain zero after the merge. Confirm that `main` is an ancestor of the resulting `develop` commit.
+
+The synchronization is not complete until Technical QA and Release Visual QA pass on the sync commit. Only then should the next development cycle begin.

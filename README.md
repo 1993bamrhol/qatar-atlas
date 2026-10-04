@@ -40,11 +40,11 @@ Production releases follow the evergreen protocol in `docs/release-candidate.md`
 
 KOVUNELI is designed for a static-first deployment (for example Vercel).
 
-Recommended production environment:
+Production canonical base for the KOVUNELI domain cutover:
 
-`NEXT_PUBLIC_SITE_URL=https://your-production-domain.example`
+`NEXT_PUBLIC_SITE_URL=https://kovuneli.com`
 
-When deployed on Vercel, the sitemap can also use `VERCEL_PROJECT_PRODUCTION_URL` automatically. If no production URL is available, the sitemap intentionally emits no canonical URLs rather than publishing localhost or a fabricated domain.
+Set the explicit production base before cutover and redeploy. Canonical URLs, EN/AR alternate links, Open Graph URLs, the sitemap and the robots sitemap reference use this shared base. On Vercel, `VERCEL_PROJECT_PRODUCTION_URL` remains the fallback when no explicit production URL is configured. If no production URL is available, KOVUNELI intentionally emits no canonical URLs rather than publishing localhost or a fabricated domain.
 
 Technical QA / release gate:
 

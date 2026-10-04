@@ -1,4 +1,4 @@
-import type {Metadata} from "next";
+import {localizedPageMetadata} from "@/lib/site-url";import type {Metadata} from "next";
 import Link from "next/link";
 import {notFound} from "next/navigation";
 import {LocaleHeader} from "@/components/layout/locale-header";
@@ -7,16 +7,7 @@ import {SourceRegistryExplorer} from "@/components/sources/source-registry-explo
 import {sourceRegistry,sourceRegistryStats} from "@/data/source-registry";
 import {isLocale} from "@/lib/i18n";
 
-export async function generateMetadata({params}:{params:Promise<{locale:string}>}):Promise<Metadata>{
-  const {locale}=await params;
-  const ar=locale==="ar";
-  return {
-    title:ar?"سجل المصادر":"Source Registry",
-    description:ar
-      ?"سجل قابل للتتبع للمصادر العامة المستخدمة في كوفونيلي، مع ربط كل مصدر بالسجلات والأدلة التي يعتمد عليها."
-      :"A traceable registry of public sources used by KOVUNELI, linking each source to the records and evidence that depend on it."
-  };
-}
+export async function generateMetadata({params}:{params:Promise<{locale:string}>}):Promise<Metadata>{const {locale}=await params;if(!isLocale(locale))return {};const ar=locale==="ar";return localizedPageMetadata({locale,path:"/sources",title:ar?"سجل المصادر":"Source Registry",description:ar?"سجل قابل للتتبع للمصادر العامة المستخدمة في كوفونيلي، مع ربط كل مصدر بالسجلات والأدلة التي يعتمد عليها.":"A traceable registry of public sources used by KOVUNELI, linking each source to the records and evidence that depend on it."})}
 
 export default async function SourcesPage({params}:{params:Promise<{locale:string}>}){
   const {locale}=await params;

@@ -8,6 +8,8 @@ const projectsAr=read("data/projects-ar.ts");
 const leadership=read("data/leadership.ts");
 const connections=read("data/connections.ts");
 const sitemap=read("app/sitemap.ts");
+const robots=read("app/robots.ts");
+const siteUrl=read("lib/site-url.ts");
 const notFound=read("app/not-found.tsx");
 const readme=read("README.md");
 for(const line of map.split("\n").filter(x=>x.includes('{id:"'))){const id=line.match(/id:"([^"]+)"/)?.[1]||"unknown";const publicPin=line.includes("publicPin:true");const pinVerified=line.includes('geoStatus:"PIN_VERIFIED"');assert(!publicPin||pinVerified,"Map record "+id+" exposes a public pin without PIN_VERIFIED");}
@@ -22,11 +24,14 @@ assert(projects.includes("Qatar Free Zones Authority · The Authority"),"QFZ cre
 assert(projects.includes("National Artificial Intelligence Strategy for Qatar 2019"),"National AI strategy supporting source is missing");
 assert(projects.includes("MCIT · Fanar at Qatar Economic Forum 2024"),"Fanar supporting source is missing");
 for(const label of ["Visit Qatar · Doha Metro Guide","Qatar Free Zones Authority · The Authority","MCIT · National Artificial Intelligence Strategy for Qatar 2019","MCIT · Fanar at Qatar Economic Forum 2024"]){assert(projectsAr.includes('"'+label+'":{label:'),"Arabic supporting source translation missing: "+label);}
-assert(sitemap.includes("NEXT_PUBLIC_SITE_URL"),"Sitemap must support explicit production domain");
-assert(sitemap.includes("VERCEL_PROJECT_PRODUCTION_URL"),"Sitemap must support Vercel production domain");
+assert(siteUrl.includes("NEXT_PUBLIC_SITE_URL"),"Site URL helper must support explicit production domain");
+assert(siteUrl.includes("VERCEL_PROJECT_PRODUCTION_URL"),"Site URL helper must support Vercel production domain");
+assert(siteUrl.includes("VERCEL_URL"),"Site URL helper must support Vercel deployment fallback");
+assert(sitemap.includes("siteBase"),"Sitemap must use shared production base");
 assert(sitemap.includes("if(!base)return []"),"Sitemap must not invent a production domain");
+assert(robots.includes("sitemap"),"Robots must advertise production sitemap when a base exists");
 assert(notFound.includes("404 · غير موجود"),"Bilingual not-found page missing");
 assert(readme.includes("Do not publish precise map pins unless the record is `PIN_VERIFIED`"),"Production map safety guidance missing");
 assert(readme.includes("Do not replace official-image placeholders until usage rights have been reviewed"),"Media rights release guidance missing");
 if(errors.length){console.error("Production data safety audit failed:\n"+errors.join("\n"));process.exit(1)}
-console.log("Production data safety audit passed: source URLs, graph references, geographic gating, supporting sources and release safeguards enforced.");
+console.log("Production data safety audit passed: source URLs, graph references, geographic gating, production URL handling, supporting sources and release safeguards enforced.");

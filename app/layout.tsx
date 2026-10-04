@@ -1,8 +1,12 @@
 import "./globals.css";
 import type {Metadata} from "next";
 import {headers} from "next/headers";
+import {siteBase} from "@/lib/site-url";
+
+const productionBase=siteBase();
 
 export const metadata:Metadata={
+  metadataBase:productionBase?new URL(productionBase):undefined,
   title:{default:"KOVUNELI | كوفونيلي",template:"%s | KOVUNELI"},
   description:"An evidence-led connected knowledge platform focused on Qatar",
   robots:{index:true,follow:true}

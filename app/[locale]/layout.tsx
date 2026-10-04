@@ -9,14 +9,14 @@ export async function generateMetadata({params}:{params:Promise<{locale:string}>
   const {locale}=await params;
   if(!isLocale(locale)) return {};
   const ar=locale==="ar";
-  const title=ar?"أطلس قطر":"Qatar Atlas";
+  const title=ar?"كوفونيلي":"KOVUNELI";
   const description=ar
-    ?"أطلس رقمي مستقل ثنائي اللغة ينظم معلومات قطر العامة المدعومة بالمصادر عبر القيادة والمؤسسات والاستراتيجيات والمشاريع والأماكن والخط الزمني."
-    :"An independent bilingual digital atlas connecting source-backed public information about Qatar across leadership, institutions, strategies, projects, places and time.";
+    ?"منصة معرفية مترابطة قائمة على الأدلة، تركز على قطر"
+    :"An evidence-led connected knowledge platform focused on Qatar";
   return {
-    title:{default:title,template:ar?"%s | أطلس قطر":"%s | Qatar Atlas"},
+    title:{default:title,template:ar?"%s | كوفونيلي":"%s | KOVUNELI"},
     description,
-    openGraph:{title,description,type:"website",locale:ar?"ar_QA":"en_QA",siteName:ar?"أطلس قطر":"Qatar Atlas"},
+    openGraph:{title,description,type:"website",locale:ar?"ar_QA":"en_QA",siteName:ar?"كوفونيلي":"KOVUNELI"},
     robots:{index:true,follow:true}
   };
 }

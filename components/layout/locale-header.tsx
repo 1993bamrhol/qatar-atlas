@@ -17,7 +17,7 @@ export function LocaleHeader({locale}:{locale:Locale}){
   const menuLabel=locale==="ar"?(open?"إغلاق القائمة":"فتح القائمة"):(open?"Close menu":"Open menu");
   return <><a className="qa-skip-link" href="#main-content">{locale==="ar"?"تجاوز إلى المحتوى":"Skip to content"}</a><header className="qa-header">
     <Container className="qa-nav">
-      <Link href={`/${locale}`} className="qa-brand" aria-label={locale==="ar"?"أطلس قطر · الرئيسية":"Qatar Atlas · Home"}>
+      <Link href={`/${locale}`} className="qa-brand" aria-label={locale==="ar"?"كوفونيلي · الرئيسية":"KOVUNELI · Home"}>
         <span>{d.brand}</span><span>{d.brandAlt}</span>
       </Link>
       <button className="qa-menu-toggle" type="button" aria-expanded={open} aria-controls="qa-primary-nav" aria-label={menuLabel} onClick={()=>setOpen(v=>!v)}>

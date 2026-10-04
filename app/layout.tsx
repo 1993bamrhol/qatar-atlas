@@ -4,7 +4,7 @@ import {headers} from "next/headers";
 
 export const metadata:Metadata={
   title:{default:"KOVUNELI | كوفونيلي",template:"%s | KOVUNELI"},
-  description:"Independent, source-backed bilingual digital atlas of Qatar.",
+  description:"An evidence-led connected knowledge platform focused on Qatar",
   robots:{index:true,follow:true}
 };
 

@@ -1,6 +1,7 @@
 {
   "name": "kovuneli",
   "version": "0.1.0",
+  "description": "An evidence-led connected knowledge platform focused on Qatar",
   "private": true,
   "scripts": {
     "dev": "next dev",

@@ -30,8 +30,8 @@ export default async function SourcesPage({params}:{params:Promise<{locale:strin
           <p className="qa-eyebrow">{ar?"سجل المصادر":"SOURCE REGISTRY"}</p>
           <h1>{ar?"كل دليل يمكن تتبعه إلى مصدره.":"Every evidence trail should lead back to a source."}</h1>
           <p>{ar
-            ?"يجمع هذا السجل المصادر العامة التي يستخدمها كوفونيلي عبر ملفات القيادة والمشاريع والعلاقات والخط الزمني والسياق الجغرافي. وهو لا يحول المصدر إلى حقيقة بحد ذاته؛ بل يوضح أين استُخدم وكيف صُنّف الدليل داخل كوفونيلي."
-            :"This registry gathers the public sources used across KOVUNELI leadership, projects, relationships, timeline and geographic context. A source is not treated as proof by itself; the registry shows where it is used and how its evidence is classified inside the KOVUNELI."}</p>
+            ?"يجمع هذا السجل المصادر العامة التي تستخدمها كوفونيلي عبر ملفات القيادة والمشاريع والعلاقات والخط الزمني والسياق الجغرافي. وهو لا يحول المصدر إلى حقيقة بحد ذاته؛ بل يوضح أين استُخدم وكيف صُنّف الدليل داخل كوفونيلي."
+            :"This registry gathers the public sources used across KOVUNELI leadership, projects, relationships, timeline and geographic context. A source is not treated as proof by itself; the registry shows where it is used and how its evidence is classified inside KOVUNELI."}</p>
           <div className="qa-actions">
             <Link className="qa-button qa-button--primary" href={`/${locale}/methodology`}>{ar?"اقرأ المنهجية":"Read methodology"}</Link>
           </div>

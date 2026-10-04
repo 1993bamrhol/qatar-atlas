@@ -5,7 +5,7 @@ export function middleware(request:NextRequest){
   const match=request.nextUrl.pathname.match(/^\/(ar|en)(?:\/|$)/);
   const locale=match?.[1]??"en";
   const headers=new Headers(request.headers);
-  headers.set("x-qatar-atlas-locale",locale);
+  headers.set("x-kovuneli-locale",locale);
   return NextResponse.next({request:{headers}});
 }
 

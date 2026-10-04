@@ -1,6 +1,6 @@
 # Media and portrait policy
 
-Qatar Atlas treats media rights separately from factual verification.
+KOVUNELI treats media rights separately from factual verification.
 
 - Real political and public figures are represented with official or properly licensed photographs only when public display rights are clear.
 - AI-generated or synthetic likenesses are not used as substitutes for real leadership portraits.

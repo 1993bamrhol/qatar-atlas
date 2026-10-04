@@ -1,6 +1,7 @@
-# Qatar Atlas | أطلس قطر
+# KOVUNELI | كوفونيلي
 
-Interactive bilingual, source-backed digital atlas connecting leadership, institutions, national strategies, projects, places, milestones and evidence.
+An evidence-led connected knowledge platform focused on Qatar  
+منصة معرفية مترابطة قائمة على الأدلة، تركز على قطر
 
 ## Development
 
@@ -37,7 +38,7 @@ Production releases follow the evergreen protocol in `docs/release-candidate.md`
 
 ## Production readiness
 
-Qatar Atlas is designed for a static-first deployment (for example Vercel).
+KOVUNELI is designed for a static-first deployment (for example Vercel).
 
 Recommended production environment:
 

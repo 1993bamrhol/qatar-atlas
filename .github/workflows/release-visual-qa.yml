@@ -28,15 +28,15 @@ jobs:
         run: npm run build
       - name: Start app
         run: |
-          npm run start -- -p 3000 > /tmp/qatar-atlas-next.log 2>&1 &
-          echo $! > /tmp/qatar-atlas-next.pid
+          npm run start -- -p 3000 > /tmp/kovuneli-next.log 2>&1 &
+          echo $! > /tmp/kovuneli-next.pid
           for i in {1..40}; do
             if curl -fsS http://127.0.0.1:3000/en >/dev/null; then
               exit 0
             fi
             sleep 1
           done
-          cat /tmp/qatar-atlas-next.log
+          cat /tmp/kovuneli-next.log
           exit 1
       - name: Browser and device QA
         run: node scripts/rc-browser-qa.mjs
@@ -44,7 +44,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: qatar-atlas-rc-visual-${{ github.sha }}
+          name: kovuneli-rc-visual-${{ github.sha }}
           path: artifacts/rc-visual
           if-no-files-found: error
           retention-days: 14

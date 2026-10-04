@@ -1,4 +1,4 @@
-# Qatar Atlas — UX/UI Status v1
+# KOVUNELI — UX/UI Status v1
 
 Status: **V1 CURRENT / RELEASE-CANDIDATE READY**
 
@@ -6,7 +6,7 @@ Scope: Home, Leadership index/detail, Projects index/detail, Timeline, Connectio
 
 ## Executive status
 
-Qatar Atlas V1 has a coherent institutional presentation system and the former release-polish HIGH findings are closed. The production UI uses the established burgundy-led palette, warm neutral surfaces, evidence/status treatments, responsive navigation, verified RTL/LTR handling, bilingual metadata, neutral leadership identity panels, safe map presentation, and evidence-backed relationship surfaces.
+KOVUNELI V1 has a coherent institutional presentation system and the former release-polish HIGH findings are closed. The production UI uses the established burgundy-led palette, warm neutral surfaces, evidence/status treatments, responsive navigation, verified RTL/LTR handling, bilingual metadata, neutral leadership identity panels, safe map presentation, and evidence-backed relationship surfaces.
 
 No UX/UI blocker is recorded for V1.
 

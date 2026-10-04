@@ -35,17 +35,17 @@ export function MapExplorer({locale="en"}:{locale?:"ar"|"en"}){
         <h2>{ar?t?.name??record.name:record.name}</h2>
         <p className="qa-map-area">{ar?t?.area??record.area:record.area}</p>
         <p>{ar?t?.summary??record.summary:record.summary}</p>
-        {record.projectHref&&<Link className="qa-text-link" href={`/${locale}${record.projectHref}`}>{ar?"افتح سجل الأطلس ←":"Open Atlas record →"}</Link>}
+        {record.projectHref&&<Link className="qa-text-link" href={`/${locale}${record.projectHref}`}>{ar?"افتح سجل كوفونيلي ←":"Open KOVUNELI record →"}</Link>}
         <div className="qa-map-related"><p className="qa-card-label">{ar?"السجلات المرتبطة":"CONNECTED RECORDS"}</p>{(ar?t?.relatedRecords??record.relatedRecords:record.relatedRecords).map(x=><span key={x}>{x}</span>)}</div>
         <div className="qa-map-source"><p className="qa-card-label">{ar?"الأدلة الجغرافية":"GEOGRAPHIC EVIDENCE"}</p>
-          {record.sourceUrl.startsWith("/")?<Link href={`/${locale}${record.sourceUrl}`}>{ar?t?.sourceLabel??"منهجية أطلس قطر":record.sourceLabel} →</Link>:<a href={record.sourceUrl} target="_blank" rel="noreferrer">{ar?t?.sourceLabel??record.sourceLabel:record.sourceLabel} ↗</a>}
+          {record.sourceUrl.startsWith("/")?<Link href={`/${locale}${record.sourceUrl}`}>{ar?t?.sourceLabel??"منهجية كوفونيلي":record.sourceLabel} →</Link>:<a href={record.sourceUrl} target="_blank" rel="noreferrer">{ar?t?.sourceLabel??record.sourceLabel:record.sourceLabel} ↗</a>}
           <EvidenceMetadata evidence={record.evidence} locale={locale} showSourceKind compact/>
           <small>{ar?`${t?.verificationNote??record.verificationNote} ولا تتحول أدلة مستوى المنطقة تلقائيًا إلى علامة عامة دقيقة.`:`${record.verificationNote} Area-level evidence never becomes an exact public pin automatically.`}</small>
         </div>
       </>})()}</aside>
     </div>
     <div className="qa-geo-model">
-      <article><strong>{ar?"المنطقة موثقة":"AREA VERIFIED"}</strong><p>{ar?"يدعم المصدر المكان أو علاقة التجاور. قد يعرض الأطلس سياق المنطقة فقط.":"The source supports the place or adjacency relationship. Atlas may show regional context only."}</p></article>
+      <article><strong>{ar?"المنطقة موثقة":"AREA VERIFIED"}</strong><p>{ar?"يدعم المصدر المكان أو علاقة التجاور. قد تعرض كوفونيلي سياق المنطقة فقط.":"The source supports the place or adjacency relationship. KOVUNELI may show regional context only."}</p></article>
       <article><strong>{ar?"الإحداثية موثقة":"PIN VERIFIED"}</strong><p>{ar?"تم التحقق بصورة مستقلة من إحداثية دقيقة، ويمكن نشرها كعلامة دقيقة.":"An exact coordinate has been independently verified and may be published as a precise marker."}</p></article>
       <article><strong>{ar?"يتطلب مراجعة":"REVIEW REQUIRED"}</strong><p>{ar?"أدلة الموقع غير مكتملة أو متعارضة، لذلك يبقى العرض العام الدقيق معطلاً.":"Location evidence is incomplete or conflicting. Precise public display remains disabled."}</p></article>
     </div>

@@ -1,6 +1,6 @@
-# Qatar Atlas — Evergreen Release Protocol
+# KOVUNELI — Evergreen Release Protocol
 
-This document defines the durable release-governance contract for Qatar Atlas. It is intentionally release-agnostic: it does not record a current PR number, tested commit SHA, deployment ID, artifact ID, or dated PASS snapshot.
+This document defines the durable release-governance contract for KOVUNELI. It is intentionally release-agnostic: it does not record a current PR number, tested commit SHA, deployment ID, artifact ID, or dated PASS snapshot.
 
 Passing CI alone does **not** authorize a Production release. A Vercel deployment reaching `READY` alone does **not** authorize a Production release. Release authority comes from the complete gated lifecycle below and an explicit release command.
 
